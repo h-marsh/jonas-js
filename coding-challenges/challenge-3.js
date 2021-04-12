@@ -18,10 +18,12 @@
 // § Data Bonus 2: Dolphins score 97, 112 and 101. Koalas score 109, 95 and 106
 
 
+////////Data 1////////
+// § Data 1: Dolphins score 96, 108 and 89. Koalas score 88, 91 and 110
+console.log(`=========================`);
+
 const avgDolphins = (96 + 108 + 89) / 3;
 const avgKoalas = (88 + 91 + 110) / 3;
-
-console.log(`=========================`)
 
 console.log(`The Dolphins average is: ${avgDolphins}`);
 console.log(`The Koalas average is: ${avgKoalas}`);
@@ -29,12 +31,16 @@ console.log(`The Koalas average is: ${avgKoalas}`);
 if (avgDolphins === avgKoalas) {
     console.log(`A tie!`);
 } else if (avgDolphins > avgKoalas) {
-    console.log(`Dolphins Win!`)
+    console.log(`Dolphins Win!`);
 } else {
-    console.log(`Koalas Win!`)
+    console.log(`Koalas Win!`);
 }
 
-console.log(`=========================`)
+
+////////Bonus 1////////
+// § Data Bonus 1: Dolphins score 97, 112 and 101. Koalas score 109, 95 and 123
+// Include a requirement for a minimum score of 100.
+console.log(`=========================`);
 
 const bonusDolphins1 = (97 + 112 + 101) / 3;
 const bonusKoalas1 = (109 + 95 + 123) / 3;
@@ -45,12 +51,18 @@ console.log(`The Bonus 1 Koalas average is: ${bonusKoalas1}`);
 if (bonusDolphins1 === bonusKoalas1) {
     console.log(`A tie!`);
 } else if (bonusDolphins1 > bonusKoalas1 && bonusDolphins1 >= 100) {
-    console.log(`Dolphins Win!`)
+    console.log(`Dolphins Win!`);
 } else if (bonusKoalas1 > bonusDolphins1 && bonusKoalas1 >= 100) {
-    console.log(`Koalas Win!`)
+    console.log(`Koalas Win!`);
+} else {
+    console.log(`No one scored high enough to win.`);
 }
 
-console.log(`=========================`)
+
+////////Bonus 2////////
+// § Data Bonus 2: Dolphins score 97, 112 and 101. Koalas score 109, 95 and 106
+// Minimum score also applies to a draw!
+console.log(`=========================`);
 
 const bonusDolphins2 = (97 + 112 + 101) / 3;
 const bonusKoalas2 = (109 + 95 + 106) / 3;
@@ -61,7 +73,9 @@ console.log(`The Bonus 2 Koalas average is: ${bonusKoalas2}`);
 if (bonusDolphins2 === bonusKoalas2 && bonusDolphins2 >= 100 && bonusKoalas2 >= 100) {
     console.log(`A tie!`);
 } else if (bonusDolphins2 > bonusKoalas2 && bonusDolphins2 >= 100) {
-    console.log(`Dolphins Win!`)
+    console.log(`Dolphins Win!`);
 } else if (bonusKoalas2 > bonusDolphins2 && bonusKoalas2 >= 100) {
-    console.log(`Koalas Win!`)
+    console.log(`Koalas Win!`);
+} else {
+    console.log(`No one scored high enough to win.`);
 }
