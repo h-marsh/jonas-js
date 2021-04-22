@@ -1,4 +1,6 @@
-///Function Declaration///
+///***Function Declaration***///
+
+
 //    function fruitProcessor(numApples, numOranges) {
 //     // console.log(numApples, numOranges);
 //     const juice = `Juice with ${numApples} apples and ${numOranges} oranges!`;
@@ -29,17 +31,20 @@
 // console.log(appleOrangeJuice);
 
 
+//==========================================================================================================================================//
+///***Function expression***///
 
-///Function expression///
+
 // const age = function (year) {
 //     return 2021 - year;
 // }
-
 // console.log(age(1988));
 
 
+//==========================================================================================================================================//
+///***Arrow Function***///
 
-///Arrow Function///
+
 // const age1 = year => 2021 - year;
 // console.log(age1(1987));
 
@@ -54,8 +59,10 @@
 // console.log(yearsRetire('Mia', 1978));
 
 
+//==========================================================================================================================================//
+///***Functions Inside Other Functions***///
 
-///Functions Inside Other Functions///
+
 // function cutFruit(numFruit) {
 //     return numFruit * 4;  //i.e. pass in 2, it returns 8.  Then it is passed into the fruit processor
 // }
@@ -71,17 +78,73 @@
 
 //Another way is to call cutFruit inside the fruitProcessor declaration instead of passing function calls as arguments like above.  The first function can be used when creating another function.  
 
-function cutFruit(numFruit) {
-    return numFruit * 4;  //i.e. pass in 2, it returns 8.  Then it is called into the fruit processor declaration
+// function cutFruit(numFruit) {
+//     return numFruit * 4;  //i.e. pass in 2, it returns 8.  Then it is called into the fruit processor declaration
+// }
+
+// function fruitProcessor(numApples, numOranges) {
+//     const applePieces = cutFruit(numApples);
+//     const orangePieces = cutFruit(numOranges);
+
+//     const juice = `Juice with ${applePieces} apple pieces and ${orangePieces} orange pieces!`;
+
+//     return juice;
+// }
+
+// console.log(fruitProcessor(2, 3));
+
+
+//==========================================================================================================================================//
+///***Function Review***///
+
+
+// const yearsRetire = (firstName, birthYear) => {
+//     const age = currentYear - birthYear;
+//     const retirement = 65 - age;
+//     return `${firstName} retires in ${retirement} years.`;
+// }
+
+//To convert to a more normal function, get rid of the arrow and add the function keyword.  This is now just a regular function expression.
+// const yearsRetire = function (firstName, birthYear) {
+//     const age = currentYear - birthYear;
+//     const retirement = 65 - age;
+//     return `${firstName} retires in ${retirement} years.`;
+// }
+
+//The age calculations can be turned into its own function, then that function is called within the yearsRetire function
+
+// const calcAge = function (birthYear) {
+//     return 2037 - birthYear;  //2037 is the current year.  The more years that pass (i.e. the higher the number), the closer to retirement
+// }
+
+
+// function yearsRetire(birthYear, firstName) {
+//     const age = calcAge(birthYear);
+//     const retirement = 65 - age;
+//     if (retirement < 0) {
+//         return 9999;
+//     } else {
+//         return retirement;
+//     }
+// }
+
+// console.log(yearsRetire(1991, 'j'));
+// console.log(yearsRetire(1970, 'm'));  //This returns a negative value when calculating the retirement value in yearsRetire, so a conditional will be used to account for it.
+
+
+
+//==========================================================================================================================================//
+///***Introduction to Arrays***///
+
+
+const calcAge = function (birthYear) {
+    return 2021 - birthYear;
 }
 
-function fruitProcessor(numApples, numOranges) {
-    const applePieces = cutFruit(numApples);
-    const orangePieces = cutFruit(numOranges);
+//Given an array of birth years, and wanting to calculate the ages for some of them
 
-    const juice = `Juice with ${applePieces} apple pieces and ${orangePieces} orange pieces!`;
+const years = [1990, 1967, 2002, 2010, 2018];
 
-    return juice;
-}
+const ages = [calcAge(years[0]), calcAge(years[1]), calcAge(years[years.length - 1])];
 
-console.log(fruitProcessor(2, 3));
+console.log(ages);
