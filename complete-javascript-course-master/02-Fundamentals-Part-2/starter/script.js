@@ -137,14 +137,134 @@
 ///***Introduction to Arrays***///
 
 
-const calcAge = function (birthYear) {
-    return 2021 - birthYear;
-}
+// const calcAge = function (birthYear) {
+//     return 2021 - birthYear;
+// }
 
-//Given an array of birth years, and wanting to calculate the ages for some of them
+// //Given an array of birth years, and wanting to calculate the ages for some of them
 
-const years = [1990, 1967, 2002, 2010, 2018];
+// const years = [1990, 1967, 2002, 2010, 2018];
 
-const ages = [calcAge(years[0]), calcAge(years[1]), calcAge(years[years.length - 1])];
+// const ages = [calcAge(years[0]), calcAge(years[1]), calcAge(years[years.length - 1])];
 
-console.log(ages);
+// console.log(ages);
+
+
+
+//==========================================================================================================================================//
+///***Methods for Arrays***///
+
+
+//push and unshift add elements to an array.  push to the end, unshift to the beginning
+//pop and shift remove elements from an array.  pop to the end, shift to the beginning
+
+// const years = [1990, 1967, 2002, 2010, 2018];
+// console.log(years);
+// const removedItem = years.pop();
+// console.log(years);
+// console.log(removedItem);
+
+// const arrayCheck = function (year) {
+//     if (years.includes(year)) {
+//         console.log(`${year} is in the array`);
+//     } else {
+//         console.log(`${year} is not there.`);
+//     }
+// }
+
+// arrayCheck(1990);
+// arrayCheck(1);
+// arrayCheck(2002);
+// arrayCheck(2018);
+
+
+//==========================================================================================================================================//
+///***Dot vs Bracket Notation***///
+
+// const hunter = {
+//     firstName: 'hunter',
+//     lastName: 'marsh',
+//     age: 2020 - 1988,
+//     job: 'student',
+//     friends: ['steven', 'zee', 'zoey']
+// };
+
+// let whichName = prompt('Which name?  First or last?');
+
+// console.log(hunter[whichName + 'Name']);    //Don't forget, this is bracket notation, not dot notation.
+
+// whichName = prompt('Which name?  firstName or lastName?');
+
+// console.log(hunter[whichName]);    //Or it could be done to get the entire property name via prompt.  This could also recieve the full property name of any of the others to return that information (age, job, friends)
+
+// const whichProperty = prompt('Select which property: firstName, lastName, age, job, or friends');
+
+// console.log(hunter[whichProperty]);    //A more generalized one that will select any property if it is defined.
+
+
+// const Jonas = {
+//     firstName: 'Jonas',
+//     lastName: 'Schmedtmann',
+//     age: 2020 - 1988,
+//     job: 'student',
+//     friends: ['Michael', 'zee', 'zoey']
+// };
+
+// //Small challenge:  Write "Jonas has 3 friends, and his best friend is Michael." without hard coding any of the values.  This assumes the first friend in the array is the best friend.
+
+// console.log(`${Jonas.firstName} has ${Jonas.friends.length} friends, and his best friend is ${Jonas.friends[0]}.`);
+
+// Jonas.friends.unshift('Charlie');
+
+// console.log(`${Jonas.firstName} has ${Jonas.friends.length} friends, and his best friend is ${Jonas.friends[0]}.`);
+
+// Jonas.friends.pop();
+// console.log(`${Jonas.firstName} has ${Jonas.friends.length} friends, and his best friend is ${Jonas.friends[0]}.`);
+
+
+
+
+//==========================================================================================================================================//
+///***Object Methods***///
+
+
+// const Jonas = {
+//     firstName: 'Jonas',
+//     lastName: 'Schmedtmann',
+//     birthYear: 1988,
+//     job: 'student',
+//     friends: ['Michael', 'zee', 'zoey'],
+//     hasLicense: true,
+//     calcAge: function () {
+//         return 2020 - this.birthYear;
+//     }
+// };
+
+// console.log(Jonas.calcAge());
+
+//Write a method called getSummary that returns a string that summarized the data about jonas.
+
+const Jonas = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtmann',
+    birthYear: 1988,
+    job: 'teacher',
+    friends: ['Michael', 'zee', 'zoey'],
+    hasLicense: true,
+    calcAge: function () {
+        return 2020 - this.birthYear;
+    },
+    // getSummary: function () {
+    //     if (this.hasLicense) {
+    //         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has a driver's license.`
+    //     } else {
+    //         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has no driver's license.`
+    //     }
+    // }
+
+    getSummary: function () {
+        return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has ${this.hasLicense ? 'a' : 'no'} driver's license.`
+    }
+};
+
+console.log(Jonas.getSummary());
