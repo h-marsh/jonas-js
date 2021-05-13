@@ -244,27 +244,144 @@
 
 //Write a method called getSummary that returns a string that summarized the data about jonas.
 
-const Jonas = {
-    firstName: 'Jonas',
-    lastName: 'Schmedtmann',
-    birthYear: 1988,
-    job: 'teacher',
-    friends: ['Michael', 'zee', 'zoey'],
-    hasLicense: true,
-    calcAge: function () {
-        return 2020 - this.birthYear;
-    },
-    // getSummary: function () {
-    //     if (this.hasLicense) {
-    //         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has a driver's license.`
-    //     } else {
-    //         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has no driver's license.`
-    //     }
-    // }
+// const Jonas = {
+//     firstName: 'Jonas',
+//     lastName: 'Schmedtmann',
+//     birthYear: 1988,
+//     job: 'teacher',
+//     friends: ['Michael', 'zee', 'zoey'],
+//     hasLicense: true,
+//     calcAge: function () {
+//         return 2020 - this.birthYear;
+//     },
+//     // getSummary: function () {
+//     //     if (this.hasLicense) {
+//     //         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has a driver's license.`
+//     //     } else {
+//     //         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has no driver's license.`
+//     //     }
+//     // }
 
-    getSummary: function () {
-        return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has ${this.hasLicense ? 'a' : 'no'} driver's license.`
+//     getSummary: function () {
+//         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has ${this.hasLicense ? 'a' : 'no'} driver's license.`
+//     }
+// };
+
+// console.log(Jonas.getSummary());
+
+
+//==========================================================================================================================================//
+///***Looping Arrays: Breaking and Continuing***///
+
+// const jonasArray = [
+//     'Jonas',
+//     'Schmedtmann',
+//     2020 - 1988,
+//     'teacher',
+//     ['Michael', 'Peter', 'Steven']
+// ];
+
+// const types = [];
+
+// for (let i = 0; i < jonasArray.length; i++) {
+//     // Reading from jonasArray
+//     console.log(jonasArray[i]);
+
+//     // Filling the new types array
+//     types[i] = typeof jonasArray[i];
+// }
+
+// console.log(types);
+// // Add another item into the original array
+// jonasArray.push(true);
+
+// for (let i = 0; i < jonasArray.length; i++) {
+//     // Reading from jonasArray
+//     console.log(jonasArray[i]);
+
+//     // Filling the new types array
+//     types[i] = typeof jonasArray[i];
+// }
+
+// // Printing the types array with the new addition from adding an element to the jonasArray
+// console.log(types);
+
+// const years = [1991, 2007, 1969, 2020];
+
+// for (let i = 0; i < years.length; i++) {
+//     console.log(2020 - years[i]);        // Don't forget to use i as an index, instead of i by itself.  It isn't 2020-i, but 2020-years[i]
+// }
+
+// What if the new values are to be stored in an array.
+
+// const years = [1991, 2007, 1969, 2020];
+
+// const ages = [];
+
+// for (let i = 0; i < years.length; i++) {
+//     ages.push(2020 - years[i]);
+// }
+
+// console.log(ages);
+
+
+
+//==========================================================================================================================================//
+///***Looping Backwards and Loops in Loops***///
+
+
+// Looping backwards
+// const jonasArray = [
+//     'Jonas',
+//     'Schmedtmann',
+//     2020 - 1988,
+//     'teacher',
+//     ['Michael', 'Peter', 'Steven'],
+//     true
+// ];
+
+// for (let i = jonasArray.length - 1; i >= 0; i--) {   //i should be greater than zero because the loop runs as long as this is true.  
+//     console.log(i, jonasArray[i]);
+// }
+
+// Looping inside of a loop
+
+// for (let exercise = 1; exercise <= 3; exercise++) {
+//     console.log(`Starting exercise ${exercise}`);
+//     for (let rep = 1; rep <= 5; rep++) {
+//         console.log(`Exercise ${exercise}, rep ${rep}`);
+//     }
+// }
+
+
+
+//==========================================================================================================================================//
+///***While loops***///
+
+// A basic for-loop
+// for (let rep = 1; rep <= 10; rep++) {
+//     console.log(`Weight repetition #${rep}`);
+// }
+
+// The same loop but as a while-loop.  Note the counter variable declared outside of the loop and the iteration counter at the end of the codeblock
+// let reps = 1;
+// while (reps <= 10) {
+//     console.log(`WHILE: Weight repetition #${reps}`);
+//     reps++;
+// }
+
+// A while-loop that does not depend on a counter.
+// I.e. rolling a die until a certain number is rolled.  The number of times the loop should be run is not known beforehand.
+
+// Math.random generates a decimal between 0 and 1.  Multiply by 6 to get numbers between 0 and 5.  Trunc to remove the decimal and give whole numbers between 0 and 5.  Add 1 to have it give numbers between 1 and 6.
+let dice = Math.trunc(Math.random() * 6) + 1;
+
+//  When a 6 is finally rolled, the loop stops and exits before the console.log line, so it won’t say a 6 is rolled, it will only exit.
+//  The if-statement was added so it will still give feedback even when a 6 is rolled and the loop is about to end. 
+while (dice !== 6) {
+    console.log(`A ${dice} was rolled.`);
+    dice = Math.trunc(Math.random() * 6) + 1;
+    if (dice === 6) {
+        console.log('Roll was a six, loop is ending...')
     }
-};
-
-console.log(Jonas.getSummary());
+}
