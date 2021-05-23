@@ -39,7 +39,7 @@
 
 // Initalizes the first random number on page load.  New random numbers are generated via 'Again!' button.
 let numberCorrect = Math.trunc(Math.random() * 10) + 1;
-console.log(numberCorrect);
+
 let score = 20;
 
 // Function that is the main game logic.  Checks if a guess was entered.  Compares the .guess.value to the RNG number.  Wrong guesses decrement score.  Correct guesses change message text and compares to highscore.
@@ -54,11 +54,12 @@ const numberGuess = function () {
     document.querySelector('.score').textContent = 0;
   } else if (guess === numberCorrect) {
     document.querySelector('.message').textContent = 'Yes!';
+    document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').textContent = numberCorrect;
+    document.querySelector('.number').style.width = '45rem';
     if (highscore.textContent < score) {
       highscore.textContent = score;
     }
-    score = 20;
   } else {
     if (guess > numberCorrect) {
       document.querySelector('.message').textContent =
@@ -74,14 +75,16 @@ const numberGuess = function () {
   }
 };
 
-// Function to reset the message, reset the score, sets the big number back to '?', resets input field, and re-create the RNG number
+// Function to reset the message, reset the score, sets the big number back to '?', resets input field, resets the background color/number width, and re-create the RNG number
 const resetButton = function () {
   document.querySelector('.message').textContent = 'Start guessing...';
   document.querySelector('.score').textContent = 20;
+  score = 20;
   document.querySelector('.number').textContent = '?';
-  document.querySelector('.guess').value = 0;
+  document.querySelector('.guess').value = '';
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
   numberCorrect = Math.trunc(Math.random() * 10) + 1;
-  console.log(numberCorrect);
 };
 
 // Adds numberGuess functionality to the 'Check!' button
