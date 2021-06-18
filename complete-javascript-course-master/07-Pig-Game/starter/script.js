@@ -42,15 +42,31 @@ const newGame = function () {
 };
 
 const roll = function () {
-  let numberRolled = Math.trunc(Math.random() * 6) + 1;
+  const numberRolled = Math.trunc(Math.random() * 6) + 1;
   // Display Dice Roll Here.  Also note at the beginning there is no dice show in the middle //
+  diceElement.classList.remove('hidden');
+  diceElement.src = `dice-${numberRolled}.png`;
   // Check if it is a 1 Here.  If yes, switch player.  If no, add to current score and display (already done below) //
-  if (player0.classList.contains('player--active')) {
-    current0 += numberRolled;
-    current0Element.textContent = current0;
-  } else if (player1.classList.contains('player--active')) {
-    current1 += numberRolled;
-    current1Element.textContent = current1;
+  if (numberRolled === 1) {
+    if (player0.classList.contains('player--active')) {
+      current0 = 0;
+      current0Element.textContent = current0;
+      player0.classList.remove('player--active');
+      player1.classList.add('player--active');
+    } else {
+      current1 = 0;
+      current1Element.textContent = current1;
+      player0.classList.add('player--active');
+      player1.classList.remove('player--active');
+    }
+  } else {
+    if (player0.classList.contains('player--active')) {
+      current0 += numberRolled;
+      current0Element.textContent = current0;
+    } else if (player1.classList.contains('player--active')) {
+      current1 += numberRolled;
+      current1Element.textContent = current1;
+    }
   }
 };
 
