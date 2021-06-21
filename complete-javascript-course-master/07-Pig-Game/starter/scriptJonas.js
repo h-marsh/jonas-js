@@ -15,13 +15,32 @@ const player1 = document.querySelector('.player--1');
 // Selecting the element displays of the current and total scores of both players
 const score0Element = document.querySelector('#score--0');
 const score1Element = document.querySelector('#score--1');
+const current0Element = document.querySelector('#current--0');
+const current1Element = document.querySelector('#current--1');
+
+let totalScores, currentScore, activePlayer, playing;
 
 // Starting conditions
-let currentScore = 0;
-diceElement.classList.add('hidden');
-let activePlayer = 0;
-const totalScores = [0, 0];
-let playing = true;
+const init = function () {
+  totalScores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+
+  diceElement.classList.add('hidden');
+  current0Element.textContent = 0;
+  current1Element.textContent = 0;
+  score0Element.textContent = 0;
+  score1Element.textContent = 0;
+
+  player0.classList.add('player--active');
+  player1.classList.remove('player--active');
+  player0.classList.remove('player--winner');
+  player1.classList.remove('player--winner');
+};
+
+// Applying the starting conditions
+init();
 
 const switchPlayer = function () {
   currentScore = 0;
@@ -64,30 +83,13 @@ const hold = function () {
         .classList.add('player--winner');
       document
         .querySelector(`.player--${activePlayer}`)
-        .classList.toggle('active--player');
+        .classList.toggle('player--active');
     } else {
       switchPlayer();
     }
   }
 };
 
-const newGame = function () {
-  current0 = 0;
-  score0 = 0;
-  current1 = 0;
-  score1 = 0;
-  current0Element.textContent = current0;
-  score0Element.textContent = score0;
-  current1Element.textContent = current1;
-  score1Element.textContent = score1;
-  player0.classList.remove('player--winner');
-  player1.classList.remove('player--winner');
-  if (!player0.classList.contains('player--active')) {
-    player0.classList.add('player--active');
-    player1.classList.remove('player--active');
-  }
-};
-
-btnNew.addEventListener('click', newGame);
+btnNew.addEventListener('click', init);
 btnRoll.addEventListener('click', roll);
 btnHold.addEventListener('click', hold);
