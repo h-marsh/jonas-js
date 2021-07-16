@@ -31,31 +31,50 @@
 // console.log(job);
 // console.log(year);
 
-var firstName = 'Jonas';
-let job = 'Teacher';
-const year = 1988;
+// var firstName = 'Jonas';
+// let job = 'Teacher';
+// const year = 1988;
 
 // Hoisting functions //
 // console.log(addDeclaration(1, 1));
 // console.log(addExpression(1, 1));
 // console.log(addArrow(1, 1));
 
-// Declaration
-function addDeclaration(a, b) {
-  return a + b;
-}
-// Expression
-const addExpression = function (a, b) {
-  return a + b;
+// // Declaration
+// function addDeclaration(a, b) {
+//   return a + b;
+// }
+// // Expression
+// const addExpression = function (a, b) {
+//   return a + b;
+// };
+// // Arrow
+// const addArrow = (a, b) => a + b;
+
+// // A pitfall of hoisting and declaring a variable with 'var' //
+// if (!numberOfProducts) deleteShoppingCart();
+
+// var numberOfProducts = 10;
+
+// function deleteShoppingCart() {
+//   console.log('All products deleted');
+// }
+
+// ***************The 'this' keyword in Practice****************** //
+
+const jonas = {
+  year: 1988,
+  calcAge: function () {
+    console.log(2021 - this.year);
+  },
 };
-// Arrow
-const addArrow = (a, b) => a + b;
 
-// A pitfall of hoisting and declaring a variable with 'var' //
-if (!numberOfProducts) deleteShoppingCart();
+const matilda = {
+  year: 2000,
+};
 
-var numberOfProducts = 10;
+// Method borrowing.
+matilda.calcAge = jonas.calcAge;
 
-function deleteShoppingCart() {
-  console.log('All products deleted');
-}
+jonas.calcAge();
+matilda.calcAge();
