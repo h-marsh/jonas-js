@@ -62,19 +62,59 @@
 
 // ***************The 'this' keyword in Practice****************** //
 
+// const jonas = {
+//   year: 1988,
+//   calcAge: function () {
+//     console.log(2021 - this.year);
+//   },
+// // };
+
+// const matilda = {
+//   year: 2000,
+// };
+
+// // Method borrowing.
+// matilda.calcAge = jonas.calcAge;
+
+// jonas.calcAge();
+// matilda.calcAge();
+
+// ***************Regular Functions vs. Arrow Functions****************** //
+
 const jonas = {
+  firstName: 'Jonas',
   year: 1988,
   calcAge: function () {
     console.log(2021 - this.year);
+
+    // Solution 1
+    // const self = this;
+    // const isMillenial = function () {
+    //   console.log(self.year >= 1981 && self.year <= 1996);
+
+    // Solution 2
+    const isMillenial = () => {
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+
+    isMillenial();
+  },
+  greet: function () {
+    console.log(`Hey ${this.firstName}`);
   },
 };
 
-const matilda = {
-  year: 2000,
-};
-
-// Method borrowing.
-matilda.calcAge = jonas.calcAge;
-
 jonas.calcAge();
-matilda.calcAge();
+
+// Arguments keyword
+const addExpr = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpr(2, 5);
+addExpr(2, 5, 8, 12);
+const addArrow = (a, b) => {
+  console.log(arguments);
+  return a + b;
+};
+addArrow(2, 5, 8); // This will give a big ole error.
