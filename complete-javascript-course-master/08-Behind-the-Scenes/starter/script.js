@@ -121,17 +121,42 @@
 
 // ***************Primitives vs. Objects (Primitive vs. Reference Types)****************** //
 
-let age = 30;
-let oldAge = age;
-age = 31;
-// It is the birthday, so age is changed, but the previous age is to be preserved in oldAge
+// let age = 30;
+// let oldAge = age;
+// age = 31;
+// // It is the birthday, so age is changed, but the previous age is to be preserved in oldAge
 
-const me = {
-  name: 'Hunter',
-  age: 32,
+// const me = {
+//   name: 'Hunter',
+//   age: 32,
+// };
+
+// const friend = me;
+// friend.age = 27;
+// console.log('Friend', friend);
+// console.log('Me:', me);
+
+// ***************Primitives vs. Objects in Practice****************** //
+
+// Primitive types
+// let lastName = 'Marsh';
+// let oldLastName = lastName;
+// lastName = 'Davis';
+
+// // Reference types
+// const jessica = {
+//   firstName: 'Jessica',
+//   lastName: 'Williams',
+//   age: 27,
+// };
+// const marriedJessica = jessica;
+// marriedJessica.lastName = 'Smith';
+
+// Actually copying objects instead of just sharing references
+
+const jessica = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
 };
-
-const friend = me;
-friend.age = 27;
-console.log('Friend', friend);
-console.log('Me:', me);
+const jessicaCopy = Object.assign({}, jessica);
