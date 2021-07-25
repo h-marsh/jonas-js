@@ -13,9 +13,6 @@ const restaurant = {
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
   // Returns an array that contains the items that were specified by their index positions in their respective menu arrays
-  order: function (starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
 
   openingHours: {
     thu: {
@@ -31,19 +28,69 @@ const restaurant = {
       close: 24,
     },
   },
+
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery: function ({ starterIndex, mainIndex, time, address }) {
+    console.log(
+      `Order: ${this.starterMenu[starterIndex]} and  ${this.mainMenu[mainIndex]} at ${time} to ${address}`
+    );
+  },
 };
 
+restaurant.orderDelivery({
+  time: '12:00',
+  address: '123 Cherry Street',
+  mainIndex: 2,
+  starterIndex: 2,
+});
+
+////////////////////////////// Destructuring Objects //////////////////////////////
+
+const { name, categories, openingHours } = restaurant;
+
+// Destructuring but with custom variable names different from property names
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+// Default values
+const { menu = restaurant.name, starterMenu: starters = [] } = restaurant;
+// Mutating variables
+let a = 111;
+let b = 999;
+const object = { a: 23, b: 7, c: 14 };
+
+({ a, b } = object);
+
+// Nested Object Destructuring
+// In two steps:
+// const { fri } = openingHours;
+// // console.log(fri);
+// const { open: fridayOpen, close: fridayClose } = fri;
+// console.log(fridayOpen, fridayClose);
+
+// In one step:
+const {
+  fri: { open: fridayOpen, close: fridayClose },
+} = openingHours;
+// console.log(fridayOpen, fridayClose);
+
+////////////////////////////// Destructuring Arrays //////////////////////////////
 // Recieve 2 return values from a function, even though the function only returned one item (an array).  This is a good way to immediately creating two variables out of one fcuntion call.
-const [starterItem, mainItem] = restaurant.order(2, 0);
-console.log(starterItem, mainItem);
+// const [starterItem, mainItem] = restaurant.order(2, 0);
+// console.log(starterItem, mainItem);
 
-// Nested array destructuring
-const nested = [2, 4, [5, 6]];
-// const [i, , j] = nested;  This one returns a number and an array.
+// // Nested array destructuring
+// const nested = [2, 4, [5, 6]];
+// // const [i, , j] = nested;  This one returns a number and an array.
 
-// This will return individual items isntead of having one remain the nested array.
-const [i, , [j, k]] = nested;
-console.log(i, j, k);
+// // This will return individual items isntead of having one remain the nested array.
+// const [i, , [j, k]] = nested;
+// console.log(i, j, k);
 
-// Default values for unknown array lengths
-const [p, q, r] = [8, 9];
+// // Default values for unknown array lengths
+// const [p, q, r] = [8, 9];
