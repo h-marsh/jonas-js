@@ -38,16 +38,22 @@ const restaurant = {
       `Order: ${this.starterMenu[starterIndex]} and  ${this.mainMenu[mainIndex]} at ${time} to ${address}`
     );
   },
+  orderPasta: function (ingredient1, ingredient2, ingredient3) {
+    console.log(
+      `Here is the pasta order including ${ingredient1}, ${ingredient2}, and ${ingredient3}.`
+    );
+  },
 };
 
-restaurant.orderDelivery({
-  time: '12:00',
-  address: '123 Cherry Street',
-  mainIndex: 2,
-  starterIndex: 2,
-});
-
 ////////////////////////////// Destructuring Objects //////////////////////////////
+
+// // This call was used to show object destructuring in the parameters of a function
+// restaurant.orderDelivery({
+//   time: '12:00',
+//   address: '123 Cherry Street',
+//   mainIndex: 2,
+//   starterIndex: 2,
+// });
 
 const { name, categories, openingHours } = restaurant;
 
@@ -57,14 +63,15 @@ const {
   openingHours: hours,
   categories: tags,
 } = restaurant;
+
 // Default values
 const { menu = restaurant.name, starterMenu: starters = [] } = restaurant;
+
 // Mutating variables
 let a = 111;
 let b = 999;
 const object = { a: 23, b: 7, c: 14 };
-
-({ a, b } = object);
+({ a, b } = object); // The parens are needed for mutating variables
 
 // Nested Object Destructuring
 // In two steps:
@@ -94,3 +101,33 @@ const {
 
 // // Default values for unknown array lengths
 // const [p, q, r] = [8, 9];
+
+////////////////////////////// The Spread Operator //////////////////////////////
+
+const arr = [7, 8, 9];
+const badNewArray = [1, 2, arr[0], arr[1], arr[2]];
+
+const goodNewArray = [1, 2, ...arr];
+
+// console.log(badNewArray);
+// console.log(goodNewArray);
+// console.log(...goodNewArray);
+
+// console.log(restaurant.mainMenu);
+// restaurant.mainMenu = [...restaurant.mainMenu, 'Gnocci'];
+// console.log(restaurant.mainMenu);
+
+// Calling the orderPasta method to practice passing a spread operator into a function.  It will get the ingedients from a prompt window and then pass those into the method.
+// const ingredients = [
+//   prompt("Let's make pasta!  Ingredient 1?"),
+//   prompt('Ingredient 2?'),
+//   prompt('Ingredient 3?'),
+// ];
+
+// restaurant.orderPasta(...ingredients);
+
+// Using the spread operator on the restaurant object.
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
+console.log(newRestaurant);
+newRestaurant.locations = 3;
+console.log(newRestaurant);
