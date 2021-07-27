@@ -38,10 +38,16 @@ const restaurant = {
       `Order: ${this.starterMenu[starterIndex]} and  ${this.mainMenu[mainIndex]} at ${time} to ${address}`
     );
   },
+
   orderPasta: function (ingredient1, ingredient2, ingredient3) {
     console.log(
       `Here is the pasta order including ${ingredient1}, ${ingredient2}, and ${ingredient3}.`
     );
+  },
+
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
   },
 };
 
@@ -68,10 +74,10 @@ const {
 const { menu = restaurant.name, starterMenu: starters = [] } = restaurant;
 
 // Mutating variables
-let a = 111;
-let b = 999;
-const object = { a: 23, b: 7, c: 14 };
-({ a, b } = object); // The parens are needed for mutating variables
+// let a = 111;
+// let b = 999;
+// const object = { a: 23, b: 7, c: 14 };
+// ({ a, b } = object); // The parens are needed for mutating variables
 
 // Nested Object Destructuring
 // In two steps:
@@ -104,10 +110,10 @@ const {
 
 ////////////////////////////// The Spread Operator //////////////////////////////
 
-const arr = [7, 8, 9];
-const badNewArray = [1, 2, arr[0], arr[1], arr[2]];
+// const arr = [7, 8, 9];
+// const badNewArray = [1, 2, arr[0], arr[1], arr[2]];
 
-const goodNewArray = [1, 2, ...arr];
+// const goodNewArray = [1, 2, ...arr];
 
 // console.log(badNewArray);
 // console.log(goodNewArray);
@@ -127,7 +133,53 @@ const goodNewArray = [1, 2, ...arr];
 // restaurant.orderPasta(...ingredients);
 
 // Using the spread operator on the restaurant object.
-const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
-console.log(newRestaurant);
-newRestaurant.locations = 3;
-console.log(newRestaurant);
+// const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guiseppe' };
+// console.log(newRestaurant);
+// newRestaurant.locations = 3;
+// console.log(newRestaurant);
+
+////////////////////////////// Rest Pattern and Parameters //////////////////////////////
+// Rest pattern does the opposite of the spread operator.  It takes individual elements and creates an array
+
+///// Destructuring
+
+// Spread operator since the (...) is on the right side of the assignment operator (=)
+const array = [1, 2, 3, 4];
+const newArray = [...array, 5, 6];
+
+// Rest, because the (...) is on the left side of the assignment operator(=)
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+// console.log(a, b, others);
+// console.log(others);
+
+// Using (...) on both sides of the assignment operator.  Working with the menus.
+const [pizza, , Risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+// console.log(pizza, Risotto, otherFood);
+
+// This time with objects instead of arrays.  Working with the business hours.  Selecting only Saturday, the rest going into another object for just weekdays.
+const { sat: Saturday, ...weekdays } = restaurant.openingHours;
+// console.log(Saturday, weekdays);
+
+///// Functions
+
+// The second use of the spread operator is to pass multiple arguments into a function at once, like with the ingredients on pasta array above
+// The rest operator does the opposite.  A simple example is a function that takes an arbitrary number of numbers and adds them together.
+
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(sum);
+};
+// add(2, 3);
+// add(5, 3, 7, 2);
+// add(8, 2, 5, 3, 2, 1);
+
+// Passing an array into the above function
+const x = [23, 5, 7];
+// add(...x);
+restaurant.orderPizza('cheese', 'pepperoni', 'olives', 'sausage');
