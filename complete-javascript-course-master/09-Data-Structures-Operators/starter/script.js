@@ -182,4 +182,45 @@ const add = function (...numbers) {
 // Passing an array into the above function
 const x = [23, 5, 7];
 // add(...x);
-restaurant.orderPizza('cheese', 'pepperoni', 'olives', 'sausage');
+// restaurant.orderPizza('cheese', 'pepperoni', 'olives', 'sausage');
+
+////////////////////////////// Short Circuiting (&& and ||) //////////////////////////////
+
+// console.log(3 || 'Jonas');
+// console.log('' || 'jonas');
+// console.log(true || 0);
+// console.log(undefined || null);
+// console.log(undefined || 0 || '' || 'hello' || 23 || null);
+
+// Using a ternary to create a new variable without knowing if a property exists
+// restaurant.numGuests = 23;
+// const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// // console.log(guests1);
+
+// // Using or operator short circuiting to create a new variable without knowing if a property exists
+// const guests2 = restaurant.numGuests || 10;
+
+// // && and operator short circuiting
+// console.log(0 && 'jonas');
+// console.log(7 && 'Jonas');
+
+// console.log('Hello' && 23 && null && 'jonas');
+
+// if (restaurant.orderPizza) {
+//   restaurant.orderPizza('sausage', 'cheese');
+// }
+
+// restaurant.orderPizza && restaurant.orderPizza('sausage', 'cheese');
+
+/////////////////////// The Nullish Coalescing Operator (??) //////////////////////////
+
+// The number of guests is intended to be 0, however this will return a falsy value which then causes an incorrect default value to be assigned below
+restaurant.numGuests = 0;
+
+// We want it to be 0, but this will cause guests1 to be 10 since 0 is falsy.  But that is incorrect.
+const guests1 = restaurant.numGuests || 10;
+console.log(guests1);
+
+// The nullish coalescing operator being used to fix this
+const guestsCorrect = restaurant.numGuests ?? 10;
+console.log(guestsCorrect);
