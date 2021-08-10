@@ -449,15 +449,71 @@ const restaurant = {
 // for (const day of properties) console.log(day);
 
 // // Property values
-const values = Object.values(openingHours);
-// console.log(values);
+// const values = Object.values(openingHours);
+// // console.log(values);
 
-// Entire Object
-const entr = Object.entries(openingHours);
-// console.log(entr);
-// console.log('==========');
+// // Entire Object
+// const entr = Object.entries(openingHours);
+// // console.log(entr);
+// // console.log('==========');
 
-// [key, value] destructuring in the condition.  Value is an object itself, so it can be destructured further {open, close}
-for (const [key, { open, close }] of entr) {
-  console.log(`On ${key} the hours are: Open-${open} and Close-${close}`);
-}
+// // [key, value] destructuring in the condition.  Value is an object itself, so it can be destructured further {open, close}
+// for (const [key, { open, close }] of entr) {
+//   console.log(`On ${key} the hours are: Open-${open} and Close-${close}`);
+// }
+
+///////////////////////////////////////////
+/////////////////////////////////////////// Sets ///////////////////////////////////////////
+///////////////////////////////////////////
+
+// Sets contain iterables.  I.e. an array
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+// console.log(ordersSet); // Note the duplicates being removed.
+
+// // Or a string
+// console.log(new Set('Jonas'));
+
+// // Get the size of a set
+// console.log(ordersSet.size);
+
+// // Checking if a certain element is in the set
+// console.log(ordersSet.has('Pizza'));
+// console.log(ordersSet.has('Bread'));
+
+// // Adding new elements to a set
+// ordersSet.add('Garlic Bread');
+// ordersSet.add('Garlic Bread');
+// console.log(ordersSet);
+
+// // Deleting elements from a set
+// ordersSet.delete('Garlic Bread');
+// console.log(ordersSet);
+
+// // Clearing a set entirely
+// // ordersSet.clear();
+
+// // Looping over the set
+// for (const order of ordersSet) {
+//   console.log(order);
+// }
+
+// Use-case example: removing duplicate values from arrays
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+console.log(staff);
+// This makes a set out of the 'staff' array, then using the spread operator it turns the set (containing only unique elements, duplicates removed) back into an array.
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+
+console.log(
+  new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
+);
+
+// How many different letters in a string
+console.log(new Set('jonasschmedtmann').size);
