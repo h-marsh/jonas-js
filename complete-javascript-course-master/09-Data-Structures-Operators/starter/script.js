@@ -294,14 +294,104 @@ const restaurant2 = {
 
 /////////////////////////////////////////// Optional Chaining (?.) ///////////////////////////////////////////
 
+// const weekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+
+// const openingHours = {
+//   [weekdays[3]]: {
+//     open: 12,
+//     close: 22,
+//   },
+//   [weekdays[4]]: {
+//     open: 11,
+//     close: 23,
+//   },
+//   sat: {
+//     open: 0, // Open 24 hours
+//     close: 24,
+//   },
+// };
+
+// const restaurant = {
+//   name: 'Classico Italiano',
+//   location: 'Via Angelo Tavanti 23, Firenze, Italy',
+//   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+//   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+//   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+//   // ES6 enhanced object literal: simply typing a variable name(that contains an object) to bring that object inside.
+//   openingHours,
+
+//   order: function (starterIndex, mainIndex) {
+//     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+//   },
+
+//   orderDelivery: function ({ starterIndex, mainIndex, time, address }) {
+//     console.log(
+//       `Order: ${this.starterMenu[starterIndex]} and  ${this.mainMenu[mainIndex]} at ${time} to ${address}`
+//     );
+//   },
+
+//   // ES6 enhanced object literal: not needing function keyword or colon when defining methods.
+//   orderPasta(ingredient1, ingredient2, ingredient3) {
+//     console.log(
+//       `Here is the pasta order including ${ingredient1}, ${ingredient2}, and ${ingredient3}.`
+//     );
+//   },
+
+//   orderPizza: function (mainIngredient, ...otherIngredients) {
+//     console.log(mainIngredient);
+//     console.log(otherIngredients);
+//   },
+// };
+
+// if (restaurant.openingHours && restaurant.openingHours.mon) {
+//   console.log(restaurant.openingHours.mon.open);
+// }
+
+// With Optional Chaining.  Checks if the property before the ? exists, and if so it then the following property will be read.  If not, it returns 'undefined'
+// console.log(restaurant.openingHours.mon?.open);
+// // Multiple optional chaining
+// console.log(restaurant.openingHours?.mon?.open);
+
+// Remember, short circuiting with && means it will only short circuit when it gets to a falsy value (or the end).
+// So here, the first value is truthy (since openingHours.fri exists) and it gets to the second, which is also truthy, but it is also the end.
+// This is because every value has to be true for && to be true.
+// restaurant.openingHours.fri && console.log(restaurant.openingHours.fri.open);
+
+// And when short circuiting with || it will short circuit only when it gets to a truthy value (or the end).
+// Here, the first value is true so it just returns that.
+// This is because only one value has to be true
+// console.log(restaurant.openingHours.fri.open) || restaurant.openingHours.fri;
+
+// Loop over this array and log if the restaurant is open on that day or not
+// const days = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+
+// for (const day of days) {
+//   const open = restaurant.openingHours[day]?.open ?? 'closed';
+//   console.log(`On ${day}, we open at ${open}`);
+// }
+
+// // Optional chaining with methods.
+// console.log(restaurant.order?.(0, 1) ?? "Method doesn't exist");
+// console.log(restaurant.orderNope?.(0, 1) ?? "Method doesn't exist");
+
+// // Optional chaining with arrays.
+// const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
+// console.log(users[0]?.name ?? 'User array empty');
+// console.log(users[1]?.name ?? 'User does not exist');
+
+///////////////////////////////////////////
+/////////////////////////////////////////// Looping Objects: Object Keys, Values, and Entries ///////////////////////////////////////////
+///////////////////////////////////////////
+
 const weekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
 
 const openingHours = {
-  [weekdays[3]]: {
+  thurs: {
     open: 12,
     close: 22,
   },
-  [weekdays[4]]: {
+  fri: {
     open: 11,
     close: 23,
   },
@@ -344,38 +434,30 @@ const restaurant = {
   },
 };
 
-// if (restaurant.openingHours && restaurant.openingHours.mon) {
-//   console.log(restaurant.openingHours.mon.open);
+// // Property names (aka keys)
+// for (const day of Object.keys(openingHours)) {
+//   console.log(day);
 // }
 
-// With Optional Chaining.  Checks if the property before the ? exists, and if so it then the following property will be read.  If not, it returns 'undefined'
-// console.log(restaurant.openingHours.mon?.open);
-// // Multiple optional chaining
-// console.log(restaurant.openingHours?.mon?.open);
+// console.log(
+//   `The restaurant is open ${
+//     Object.keys(openingHours).length
+//   } days: ${Object.keys(openingHours).join(', ')}.`
+// );
 
-// Remember, short circuiting with && means it will only short circuit when it gets to a falsy value (or the end).
-// So here, the first value is truthy (since openingHours.fri exists) and it gets to the second, which is also truthy, but it is also the end.
-// This is because every value has to be true for && to be true.
-// restaurant.openingHours.fri && console.log(restaurant.openingHours.fri.open);
+// const properties = Object.keys(openingHours);
+// for (const day of properties) console.log(day);
 
-// And when short circuiting with || it will short circuit only when it gets to a truthy value (or the end).
-// Here, the first value is true so it just returns that.
-// This is because only one value has to be true
-// console.log(restaurant.openingHours.fri.open) || restaurant.openingHours.fri;
+// // Property values
+const values = Object.values(openingHours);
+// console.log(values);
 
-// Loop over this array and log if the restaurant is open on that day or not
-// const days = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+// Entire Object
+const entr = Object.entries(openingHours);
+// console.log(entr);
+// console.log('==========');
 
-// for (const day of days) {
-//   const open = restaurant.openingHours[day]?.open ?? 'closed';
-//   console.log(`On ${day}, we open at ${open}`);
-// }
-
-// Optional chaining with methods.
-console.log(restaurant.order?.(0, 1) ?? "Method doesn't exist");
-console.log(restaurant.orderNope?.(0, 1) ?? "Method doesn't exist");
-
-// Optional chaining with arrays.
-const users = [{ name: 'Jonas', email: 'hello@jonas.io' }];
-console.log(users[0]?.name ?? 'User array empty');
-console.log(users[1]?.name ?? 'User does not exist');
+// [key, value] destructuring in the condition.  Value is an object itself, so it can be destructured further {open, close}
+for (const [key, { open, close }] of entr) {
+  console.log(`On ${key} the hours are: Open-${open} and Close-${close}`);
+}
