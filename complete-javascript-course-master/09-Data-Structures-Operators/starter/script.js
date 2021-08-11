@@ -504,16 +504,77 @@ const ordersSet = new Set([
 //   console.log(order);
 // }
 
-// Use-case example: removing duplicate values from arrays
-const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
-console.log(staff);
-// This makes a set out of the 'staff' array, then using the spread operator it turns the set (containing only unique elements, duplicates removed) back into an array.
-const staffUnique = [...new Set(staff)];
-console.log(staffUnique);
+// // Use-case example: removing duplicate values from arrays
+// const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+// console.log(staff);
+// // This makes a set out of the 'staff' array, then using the spread operator it turns the set (containing only unique elements, duplicates removed) back into an array.
+// const staffUnique = [...new Set(staff)];
+// console.log(staffUnique);
 
-console.log(
-  new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
-);
+// console.log(
+//   new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size
+// );
 
-// How many different letters in a string
-console.log(new Set('jonasschmedtmann').size);
+// // How many different letters in a string
+// console.log(new Set('jonasschmedtmann').size);
+
+///////////////////////////////////////////
+/////////////////////////////////////////// Maps: Fundamentals ///////////////////////////////////////////
+///////////////////////////////////////////
+
+// Easiest way to create a new map is to create an empty one
+const rest = new Map();
+
+// Adding an element to the map
+rest.set('name', 'Classico Italiano');
+// console.log(rest);
+
+// Remember, keys in maps can be any data type.  Here, a number is used as the key (whereas with objects, the keys are strings).
+rest.set(1, 'Location One');
+rest.set(2, 'Location Two');
+// The set() method also returns the updated map.
+// console.log(rest.set(3, 'Location Three'));
+
+// The set() method also allows for chaining to add multiple key-value pairs to the map.
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open')
+  .set(false, 'We are closed');
+// console.log(rest);
+
+// console.log(rest.get('categories'));
+// console.log(rest.get(true));
+// console.log(rest.get(false));
+
+// Using conditionals to get a boolean which is then passed in get(), since the map has boolean keys.  Though this isn't the best thing since it's tricky to read and follow.
+const time = 8;
+// console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+// Checking if a map contains a certain key
+// console.log(rest.has('categories'));
+
+// Deleting elements from the map
+// console.log(rest);
+// rest.delete(2);
+rest.clear();
+
+// Using an array as a key.  But this can't be used with get() since the map array would be an entirely different object than the get() array.
+rest.set([1, 2, 3], 'This is an array');
+// console.log(rest);
+
+// To be able to use the get() method with an array key, the array first needs to be create and stored in a variable
+const arr = [1, 2, 3, 4];
+
+// Then that variable is used as the key
+rest.set(arr, 'This is the variable array');
+// console.log(rest);
+// console.log(rest.get(arr));
+
+// Objects as map keys is useful when using DOM elements
+// rest.set(document.querySelector('h1'), 'Heading');
+
+///////////////////////////////////////////
+/////////////////////////////////////////// Maps: Iteration ///////////////////////////////////////////
+///////////////////////////////////////////
