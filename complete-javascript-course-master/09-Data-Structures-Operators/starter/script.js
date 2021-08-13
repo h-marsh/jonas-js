@@ -578,3 +578,60 @@ rest.set(arr, 'This is the variable array');
 ///////////////////////////////////////////
 /////////////////////////////////////////// Maps: Iteration ///////////////////////////////////////////
 ///////////////////////////////////////////
+
+// Instead of populating a new map with set(), which is cumbersome with multiple values to set, this is a different way
+// An array of smaller arrays.  The smaller arrays first position will be the key and the second position will be the value.
+const question = new Map([
+  ['question', 'What is the best programming language?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'Javascript'],
+  ['correct', 3],
+  [true, 'Correct guess :D'],
+  [false, 'Incorrect guess :('],
+]);
+
+// console.log(question);
+// console.log(Object.entries(openingHours));
+
+// Convert object to map
+const hoursMap = new Map(Object.entries(openingHours));
+// console.log(hoursMap);
+
+// Iterating over a map, note the destructuring right in the condition
+// for (const [key, value] of question) {
+//   if (typeof key === 'number') {
+//     console.log(value);
+//   }
+// }
+
+// A quick little mockup of the 'quiz'
+// console.log(question.get('question'));
+// for (const [key, value] of question) {
+//   if (typeof key === 'number') {
+//     console.log(`Option ${key}: ${value}`);
+//   }
+// }
+
+// // Get an answer from the user
+// const answer = Number(prompt('Answer?'));
+// console.log(answer);
+
+// Logic to compare 'answer' to the 'correct' key in the map, and give the appropriate response based on the two boolean keys.
+// if (answer === question.get('correct')) {
+//   console.log(question.get(true));
+// } else {
+//   console.log(question.get(false));
+// }
+
+// A shorter way of doing it
+// console.log(question.get(question.get('correct') === answer));
+
+// Converting map to array (using spread operator)
+// const backToArray = [...question];
+// console.log(backToArray);
+
+// Entries, keys, and values methods used on the map
+console.log([...question.entries()]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
