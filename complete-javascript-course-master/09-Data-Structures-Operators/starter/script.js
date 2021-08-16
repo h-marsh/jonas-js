@@ -1,8 +1,8 @@
 'use strict';
 
 // Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+// const flights =
+//   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
 const restaurantOriginal = {
@@ -575,9 +575,9 @@ rest.set(arr, 'This is the variable array');
 // Objects as map keys is useful when using DOM elements
 // rest.set(document.querySelector('h1'), 'Heading');
 
-///////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
 /////////////////////////////////////////// Maps: Iteration ///////////////////////////////////////////
-///////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
 
 // Instead of populating a new map with set(), which is cumbersome with multiple values to set, this is a different way
 // An array of smaller arrays.  The smaller arrays first position will be the key and the second position will be the value.
@@ -632,6 +632,31 @@ const hoursMap = new Map(Object.entries(openingHours));
 // console.log(backToArray);
 
 // Entries, keys, and values methods used on the map
-console.log([...question.entries()]);
-console.log([...question.keys()]);
-console.log([...question.values()]);
+// console.log([...question.entries()]);
+// console.log([...question.keys()]);
+// console.log([...question.values()]);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////////// Working with Strings - pt 1 /////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+// console.log(airline.length);
+// console.log('String'.length);
+
+// console.log(plane[0]);
+// console.log(plane[1]);
+// console.log(plane[2]);
+// console.log(plane[3]);
+// console.log('B737'[0]);
+
+// console.log(airline.indexOf('r'));
+// console.log(airline.lastIndexOf('r'));
+// console.log(airline.indexOf('Air'));
+// console.log(airline.lastIndexOf('Portugal'));
+console.log(airline.slice(4));
