@@ -660,3 +660,6 @@ const plane = 'A320';
 // console.log(airline.indexOf('Air'));
 // console.log(airline.lastIndexOf('Portugal'));
 console.log(airline.slice(4));
+console.log(airline.slice(4, 7));
+
+airline.slice(airline.lastIndexOf(' ') + 1);
