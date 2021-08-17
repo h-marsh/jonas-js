@@ -644,7 +644,7 @@ const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 const airline = 'TAP Air Portugal';
-const plane = 'A320';
+// const plane = 'A320';
 
 // console.log(airline.length);
 // console.log('String'.length);
@@ -659,7 +659,143 @@ const plane = 'A320';
 // console.log(airline.lastIndexOf('r'));
 // console.log(airline.indexOf('Air'));
 // console.log(airline.lastIndexOf('Portugal'));
-console.log(airline.slice(4));
-console.log(airline.slice(4, 7));
+// console.log(airline.slice(4));
+// console.log(airline.slice(4, 7));
 
+// Slice() without hardcoding parameters
 airline.slice(airline.lastIndexOf(' ') + 1);
+
+// Slice() with negative parameters.  Starts extracting from the end first.
+// console.log(airline.slice(-2));
+// console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats.
+  const letter = seat.slice(-1);
+  if (letter === 'B' || letter === 'E') {
+    console.log(`${seat} is a middle seat.`);
+  } else {
+    console.log(`${seat} is NOT a middle seat.`);
+  }
+};
+// checkMiddleSeat('11B');
+// checkMiddleSeat('1A');
+// checkMiddleSeat('13E');
+// checkMiddleSeat('16C');
+
+airline.toUpperCase();
+airline.toLowerCase();
+
+'String'.toUpperCase();
+'String'.toLowerCase();
+
+// Fix capitalization in a name
+const passenger = 'jOnAs'; // Should be 'Jonas'
+
+// Put it all to lowercase the take the first letter off, lowercase, and access just the first letter to capitalize.
+const passengerLower = passenger.toLowerCase().slice(1);
+
+// This connects the first element, that was captialized, with the remaining string, that was lowercase()
+const passengerCorrect = passenger[0].toUpperCase() + passengerLower;
+
+// Comparing emails
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.Io \n'; // Remember, \n is a new line character (aka pressing enter)
+
+// Inefficient since it can be done in one step, seen below
+// const lowerLogin = loginEmail.toLowerCase();
+// const trimmedLogin = lowerLogin.trim();
+
+// In one step.
+const oneStepEmail = loginEmail.toLowerCase().trim();
+
+// Replacing parts of strings
+const priceGB = `£288,97`; // The comma is used in Europe instead of period.
+
+// Convert the price to USD, along with replacing the comma with a period and the pound with $
+// const priceUS = priceGB.replace('£', '$').replace(',', '.');
+// console.log(priceUS);
+
+// // Replacing full words
+// const announcement =
+//   'All passengers come to boarding door 23.  Boarding door 23.';
+
+// console.log(announcement.replace('door', 'gate'));
+
+// // Replacing all with a very simple regex
+// console.log(announcement.replace(/door/g, 'gate'));
+
+// Boolean string methods
+const plane = 'A320neo';
+// console.log(plane.includes('A320'));
+// console.log(plane.includes('Boeing'));
+// Starts with
+// console.log(plane.startsWith('A'));
+// console.log(plane.startsWith('A3'));
+// console.log(plane.startsWith('Air'));
+
+// if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+//   console.log('It is part of the new Airbus fleet');
+// } else {
+//   console.log('It is NOT part of the new Airbus fleet');
+// }
+
+const checkBags = function (items) {
+  const bags = items.toLowerCase();
+  if (bags.includes('knife') || bags.includes('gun')) {
+    console.log('They are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
+
+// checkBags('I have a laptop, some Food, and a pocket Knife.');
+// checkBags('Socks and camera');
+// checkBags('Got some snacks and a gun for protection');
+
+// Using the split() method.  Splits a string into multiple parts based on a divider string
+// console.log('A+very+nice+string'.split('+'));
+
+// console.log('Jonas Schmedtmann'.split(' '));
+
+// Destructuring at the same time as split()
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
+// console.log(firstName, lastName);
+
+// Make the lastName toUpperCase() and add ‘Mr.’ to the beginning using join().
+const fullName = ['Mr.', firstName, lastName.toUpperCase()].join('-');
+
+// Capitalizing a name (using a custom function)
+
+const capitalizeName = function (name) {
+  // Splits the string up and puts the elements into an array.
+  const names = name.split(' ');
+  const namesUpper = [];
+  // This loop will capitalize the first letter of each name.
+  for (const n of names) {
+    // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    namesUpper.push(n.replace(n[0], n[0].toUpperCase())); // Using replace() to achieve the same result
+  }
+  console.log(namesUpper.join(' '));
+};
+
+// capitalizeName('jessica ann smith davis');
+
+// Padding a string
+const message = 'Go to gate 23!';
+// console.log(message.padStart(25, '+'));
+// console.log('Jonas'.padStart(25, '+'));
+
+// Using padding to 'mask' a credit card, except the last 4 digits
+const maskCard = function (number) {
+  const cardString = String(number);
+  const lastFour = cardString.slice(-4);
+  return lastFour.padStart(cardString.length, '*');
+};
+
+// console.log(maskCard(123456));
+// console.log(maskCard(1234567890123456));
+
+// Repeat()
+const messageWarn = 'Bad weather... All Departures Delayed... ';
+console.log(messageWarn.repeat(3));
