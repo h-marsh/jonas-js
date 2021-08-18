@@ -23,5 +23,13 @@
 // you're stuck. Then pause and continue!
 // Afterwards, test with your own test data!
 
-document.body.append(document.createElement('textarea'));
-document.body.append(document.createElement('button'));
+const camelCase = function (string) {
+	const array = string.split('_');
+	const replaced = array[1].replace(array[1][0], array[1][0].toUpperCase());
+	console.log(array[0] + replaced);
+};
+
+camelCase('underscore_case');
+
+// document.body.append(document.createElement('textarea'));
+// document.body.append(document.createElement('button'));
