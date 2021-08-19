@@ -1,5 +1,6 @@
-// Write a program that receives a list of variable names written in underscore_case
+// 1. Write a program that receives a list of variable names written in underscore_case
 // and convert them to camelCase.
+
 // The input will come from a textarea inserted into the DOM (see code below to
 // insert the elements), and conversion will happen when the button is pressed.
 // Test data (pasted to textarea, including spaces):
@@ -8,6 +9,7 @@
 // Some_Variable
 // calculate_AGE
 // delayed_departure
+
 // Should produce this output (5 separate console.log outputs):
 // underscoreCase ✅
 // firstName ✅✅
@@ -23,13 +25,39 @@
 // you're stuck. Then pause and continue!
 // Afterwards, test with your own test data!
 
-const camelCase = function (string) {
-	const array = string.split('_');
-	const replaced = array[1].replace(array[1][0], array[1][0].toUpperCase());
-	console.log(array[0] + replaced);
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+// const camelCase1 = function (string) {
+// const array = string.split('_');
+// const replaced = array[1].replace(array[1][0], array[1][0].toUpperCase());
+// console.log(array[0] + replaced);
+// };
+
+const camelCase = function () {
+	const text = document.querySelector('textarea').value;
+	const pairs = text.split('\n');
+	// Now for the loop that converts each item in the array to camelCase
+	for (const pair of pairs) {
+		const array = pair.toLowerCase().trim().split('_');
+		const replaced = array[1].replace(array[1][0], array[1][0].toUpperCase());
+		console.log(array[0] + replaced);
+	}
 };
 
-camelCase('underscore_case');
+const jonasSolution = function () {
+	const text = document.querySelector('textarea').value;
+	const pairs = text.split('\n');
+	// Now for the loop that converts each item in the array to camelCase
+	for (const [i, pair] of pairs.entries()) {
+		const [first, second] = pair.toLowerCase().trim().split('_');
+		const output = `${first}${second.replace(
+			second[0],
+			second[0].toUpperCase()
+		)}`;
+		console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
+	}
+};
 
-// document.body.append(document.createElement('textarea'));
-// document.body.append(document.createElement('button'));
+// Event handler on button
+document.querySelector('button').addEventListener('click', jonasSolution);
