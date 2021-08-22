@@ -111,4 +111,84 @@ const greet = function (greeting) {
 
 // With arrow functions
 const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
-greetArrow('Hello')('Jonas Schmarrow');
+// greetArrow('Hello')('Jonas Schmarrow');
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////// The call() and apply() Methods ////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
+};
+
+// lufthansa.book(239, 'Jonas');
+// lufthansa.book(635, 'Smith');
+// console.log(lufthansa);
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
+
+const book = lufthansa.book;
+
+// Does NOT work because the 'this' keyword within the function points to undefined.
+// book(23, 'sarah');
+
+// Using the call() method
+// book.call(eurowings, 23, 'sarah');
+
+// book.call(lufthansa, 110, 'Mary Cooper');
+
+// Using the apply() method.  No list of args, only array.
+const flightData = [555, 'Joe'];
+// book.apply(eurowings, flightData);
+
+// apply() isn't used much.  instead, call() and the spread operator is used.
+// book.call(eurowings, ...flightData);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////////// The bind Method ////////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const bookEW = book.bind(eurowings);
+// bookEW(145, 'Steven');
+
+const bookLH = book.bind(lufthansa);
+// bookLH(999, 'roger');
+
+// Passing more arguments with bind() that will set them in stone
+const bookEW23 = book.bind(eurowings, 23);
+// bookEW23('Jonas');
+
+// Using bind() with event listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+  this.planes++;
+  console.log(this.planes);
+};
+
+// document
+//   .querySelector('.buy')
+//   .addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+const addTax = function (rate, value) {
+  return value + value * rate;
+};
+
+// console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+
+console.log(addVAT(100));
