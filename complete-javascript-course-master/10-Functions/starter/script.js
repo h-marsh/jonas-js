@@ -191,4 +191,30 @@ const addTax = function (rate, value) {
 
 const addVAT = addTax.bind(null, 0.23);
 
-console.log(addVAT(100));
+// console.log(addVAT(100));
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////// Immediately Invoked Function Expressions (IIFE) ////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// This won't work since it is possible to call it over and over, even if it is only called once.
+const runOnce = function () {
+  console.log("This could 'should' never run again but...");
+};
+// runOnce();
+// runOnce();
+
+// IIFE
+(function () {
+  const isPrivate = 23;
+  const isEncapsulated = 30;
+  console.log("This could 'should' never run again but...");
+})();
+
+// IIFE with an arrow function
+(() => console.log('This will never run again...arrow style'))();
+
+{
+  const isPrivate = 245;
+  let isEncapsulated = 2455;
+}
