@@ -205,16 +205,90 @@ const runOnce = function () {
 // runOnce();
 
 // IIFE
-(function () {
-  const isPrivate = 23;
-  const isEncapsulated = 30;
-  console.log("This could 'should' never run again but...");
-})();
+// (function () {
+//   const isPrivate = 23;
+//   const isEncapsulated = 30;
+//   console.log("This could 'should' never run again but...");
+// })();
 
 // IIFE with an arrow function
-(() => console.log('This will never run again...arrow style'))();
+// (() => console.log('This will never run again...arrow style'))();
 
 {
   const isPrivate = 245;
   let isEncapsulated = 2455;
 }
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////////////// Closures ///////////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// This is the function that will create the closure.  (It is called secureBooking since the passengerCount variable cannot be accessed from outside the function)
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers.`);
+  };
+};
+
+const booker = secureBooking();
+// booker();
+// booker();
+// booker();
+// Most of this is in the drive notes.
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////////// More Closure Examples ////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// It isn’t necessary to return a function from another function in order to create a closure.
+
+// Example 1: Showing how closures work with reassignment just like when initial creation.
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 100;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+// g();
+// f();
+// 'h' reassigns 'f', so this second call 'f' is a different function from its first call
+// h();
+// f();
+
+// Example 2
+const boardPassengers = function (num, wait) {
+  const perGroup = num / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding all ${num} passengers.`);
+    console.log(`There are 3 groups, each with ${perGroup} passengers`);
+  }, wait * 1000);
+
+  console.log(`Will start board in ${wait} seconds.`);
+};
+
+const perGroup = 1000000;
+boardPassengers(180, 3);
+
+// Example 3
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+
+  document.querySelector('body').addEventListener('click', function () {
+    header.style.color = 'blue';
+  });
+});
