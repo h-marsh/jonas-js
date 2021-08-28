@@ -71,13 +71,13 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 //////////////////////////////////////// Simple Array Methods /////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-let arr = ['a', 'b', 'c', 'd', 'e'];
+// let arr = ['a', 'b', 'c', 'd', 'e'];
 
 // The slice() method.
 // arr.slice();
@@ -93,17 +93,59 @@ let arr = ['a', 'b', 'c', 'd', 'e'];
 // console.log(arr);
 
 // The reverse() method.
-let arr2 = ['j', 'i', 'h', 'g', 'e'];
+// let arr2 = ['j', 'i', 'h', 'g', 'e'];
 // console.log(arr2);
 // arr2.reverse();
 // console.log(arr2);
 
 // The concat() method.
 // console.log(arr.concat(arr2));
-console.log(arr);
-console.log(arr2);
-const arrays = arr.concat(arr2);
-console.log(arrays);
+// console.log(arr);
+// console.log(arr2);
+// const arrays = arr.concat(arr2);
+// console.log(arrays);
 
 // The join() method.
-console.log(arrays.join(' - '));
+// console.log(arrays.join(' - '));
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////// Looping Arrays: forEach ////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// Using a forOf loop first.
+// for (const movement of movements) {
+// for (const movement of movements.entries()) {
+//   movement > 0
+//     ? console.log(`This was a DEPOSIT of ${movement}`)
+//     : console.log(`This was a WITHDRAWAL of ${movement}`);
+// }
+
+// Using the forEach() method
+// movements.forEach(function (movement) {
+//   movement > 0
+//     ? console.log(`This was a DEPOSIT of ${movement} using forEach()`)
+//     : console.log(`This was a WITHDRAWAL of ${movement} using forEach()`);
+// });
+
+// Accessing the counter variable (i.e the current index) with the forOf loop
+// for (const [i, value] of movements.entries()) {
+//   value > 0
+//     ? console.log(`Transaction ${i + 1} was a DEPOSIT of ${value}`)
+//     : console.log(`Transaction ${i + 1} was a WITHDRAWAL of ${value}`);
+// }
+
+// Accessing the counter variable (i.e the current index) with forEach()
+// forEach() passes in the current element, its index, and the entire array being looped over.
+movements.forEach(function (movement, index, array) {
+  movement > 0
+    ? console.log(
+        `Transaction ${index + 1} was a DEPOSIT of ${movement} using forEach()`
+      )
+    : console.log(
+        `Transaction ${
+          index + 1
+        } was a WITHDRAWAL of ${movement} using forEach()`
+      );
+});
