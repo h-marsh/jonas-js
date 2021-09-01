@@ -138,14 +138,18 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // Accessing the counter variable (i.e the current index) with forEach()
 // forEach() passes in the current element, its index, and the entire array being looped over.
-movements.forEach(function (movement, index, array) {
-  movement > 0
-    ? console.log(
-        `Transaction ${index + 1} was a DEPOSIT of ${movement} using forEach()`
-      )
-    : console.log(
-        `Transaction ${
-          index + 1
-        } was a WITHDRAWAL of ${movement} using forEach()`
-      );
-});
+// movements.forEach(function (movement, index, array) {
+//   movement > 0
+//     ? console.log(
+//         `Transaction ${index + 1} was a DEPOSIT of ${movement} using forEach()`
+//       )
+//     : console.log(
+//         `Transaction ${
+//           index + 1
+//         } was a WITHDRAWAL of ${movement} using forEach()`
+//       );
+// });
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////// forEach with Maps and Sets ///////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
