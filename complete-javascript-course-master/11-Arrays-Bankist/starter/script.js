@@ -185,4 +185,5 @@ const movementsUSD = movements.map(function (movement) {
 console.log(movements);
 console.log(movementsUSD);
 
+// The above but as an arrow function to clean things up.
 const movementsUSDArrow = movements.map(movement => movement * euroToUSD);
