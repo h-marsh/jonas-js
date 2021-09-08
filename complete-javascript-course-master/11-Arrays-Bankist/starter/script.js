@@ -112,8 +112,6 @@ const accounts = [account1, account2, account3, account4];
 ////////////////////////////////////// Looping Arrays: forEach ////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
 // Using a forOf loop first.
 // for (const movement of movements) {
 // for (const movement of movements.entries()) {
@@ -173,5 +171,18 @@ const currencies = new Map([
 // });
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
-/////////////////////////////////////// Creating DOM Elements /////////////////////////////////////////
+//////////////////////////////////////////// The map Method ////////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const euroToUSD = 1.1;
+
+const movementsUSD = movements.map(function (movement) {
+  return movement * euroToUSD;
+});
+
+console.log(movements);
+console.log(movementsUSD);
+
+const movementsUSDArrow = movements.map(movement => movement * euroToUSD);
