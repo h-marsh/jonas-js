@@ -182,8 +182,48 @@ const movementsUSD = movements.map(function (movement) {
   return movement * euroToUSD;
 });
 
-console.log(movements);
-console.log(movementsUSD);
+// console.log(movements);
+// console.log(movementsUSD);
 
 // The above but as an arrow function to clean things up.
 const movementsUSDArrow = movements.map(movement => movement * euroToUSD);
+
+const movementDesc = movements.map(function (movement, index, array) {
+  return `Movement ${
+    index + 1
+  }: ${movement > 0 ? 'DEPOSITED' : 'WITHDREW'} ${Math.abs(movement)}`;
+});
+
+// console.log(movementDesc);
+
+const movementDescArrow = movements.map(
+  (movement, index) =>
+    `Movement ${index + 1}: ${
+      movement > 0 ? 'DEPOSITED' : 'WITHDREW'
+    } ${Math.abs(movement)}`
+);
+
+// console.log(movementDescArrow);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////////////// Computing Usernames /////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// Usernames are the initials, which are computed from the user itself.
+// Loop over the array, taking the first letter and putting it into a new array to then be joined() later.
+const user = 'Steven Thomas Willaims'; // The computed username should be 'stw'
+const username = user
+  .toLowerCase()
+  .split(' ')
+  .map(function (name) {
+    return name[0];
+  })
+  .join('');
+
+const usernameArrow = user
+  .toLowerCase()
+  .split(' ')
+  .map(name => name[0])
+  .join('');
+
+// console.log(usernameArrow);
