@@ -174,34 +174,34 @@ const currencies = new Map([
 //////////////////////////////////////////// The map Method ////////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movementsMapMethod = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const euroToUSD = 1.1;
+// const euroToUSD = 1.1;
 
-const movementsUSD = movements.map(function (movement) {
-  return movement * euroToUSD;
-});
+// const movementsUSD = movements.map(function (movement) {
+//   return movement * euroToUSD;
+// });
 
 // console.log(movements);
 // console.log(movementsUSD);
 
 // The above but as an arrow function to clean things up.
-const movementsUSDArrow = movements.map(movement => movement * euroToUSD);
+// const movementsUSDArrow = movements.map(movement => movement * euroToUSD);
 
-const movementDesc = movements.map(function (movement, index, array) {
-  return `Movement ${
-    index + 1
-  }: ${movement > 0 ? 'DEPOSITED' : 'WITHDREW'} ${Math.abs(movement)}`;
-});
+// const movementDesc = movements.map(function (movement, index, array) {
+//   return `Movement ${
+//     index + 1
+//   }: ${movement > 0 ? 'DEPOSITED' : 'WITHDREW'} ${Math.abs(movement)}`;
+// });
 
 // console.log(movementDesc);
 
-const movementDescArrow = movements.map(
-  (movement, index) =>
-    `Movement ${index + 1}: ${
-      movement > 0 ? 'DEPOSITED' : 'WITHDREW'
-    } ${Math.abs(movement)}`
-);
+// const movementDescArrow = movements.map(
+//   (movement, index) =>
+//     `Movement ${index + 1}: ${
+//       movement > 0 ? 'DEPOSITED' : 'WITHDREW'
+//     } ${Math.abs(movement)}`
+// );
 
 // console.log(movementDescArrow);
 
@@ -211,8 +211,8 @@ const movementDescArrow = movements.map(
 
 // Usernames are the initials, which are computed from the user itself.
 // Loop over the array, taking the first letter and putting it into a new array to then be joined() later.
-const user = 'Steven Thomas Willaims'; // The computed username should be 'stw'
-const username = user
+const userComputingUsernames = 'Steven Thomas Willaims'; // The computed username should be 'stw'
+const username = userComputingUsernames
   .toLowerCase()
   .split(' ')
   .map(function (name) {
@@ -220,10 +220,72 @@ const username = user
   })
   .join('');
 
-const usernameArrow = user
+const usernameArrow = userComputingUsernames
   .toLowerCase()
   .split(' ')
   .map(name => name[0])
   .join('');
 
 // console.log(usernameArrow);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////////// The filter Method //////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const movementsFilter = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const deposits = movementsFilter.filter(function (movement) {
+  return movement > 0;
+});
+
+// console.log(movementsFilter);
+// console.log(deposits);
+
+// Doing the same thing but with a for-loop, which requires an empty array to be created outside.
+const depositsForLoop = [];
+for (const mov of movementsFilter) if (mov > 0) depositsForLoop.push(mov);
+
+const withdrawals = movementsFilter.filter(mov => mov < 0);
+
+// console.log(movementsFilter);
+// console.log(withdrawals);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////////// The reduce Method //////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const movementsReduce = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const balance = movementsReduce.reduce(function (acc, element, index, array) {
+  return acc + element;
+}, 0);
+
+// console.log(balance);
+
+const func = (acc, element) => acc + element;
+
+const balanceArrow = movementsReduce.reduce(func, 0);
+
+// console.log(balanceArrow);
+
+const movementsMax = movementsReduce.reduce(function (acc, element) {
+  if (element > acc) {
+    acc = element;
+  }
+  return acc;
+}, movementsReduce[0]);
+
+// console.log(movementsMax);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////////// Chaining Methods //////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const movementsChain = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const euroToUSD = 1.1;
+
+const depositsUSD = movementsChain
+  .filter(mov => mov <= 0)
+  .map(mov => mov * euroToUSD)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(depositsUSD);
