@@ -302,11 +302,26 @@ const firstWithdrawal = movementsFind.find(function (mov) {
 
 const firstWithdrawalArrow = movementsFind.find(mov => mov < 0);
 
-console.log(firstWithdrawal);
-console.log(firstWithdrawalArrow);
+// console.log(firstWithdrawal);
+// console.log(firstWithdrawalArrow);
 
 // Using the find() method to find an object in the 'accounts' array based on a property of that object.  This will be used to Implementing Login and Implementing Transfers
 // Using find() to get a specific object in the array by looking for a specific property value.  NOTE: This will not work since the 'accounts' array isn't here, I just copied it here so the 'bankist' project file will be cleaner and only contain code specific to that.
 // const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 
 // console.log(account);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////// some and every Methods ///////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// the some() method
+const movementsSome = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// Include only checks for a specific value.  It checks for equality.
+console.log(movementsReduce);
+// console.log(movementsSome.includes(-130));
+
+// some() can determine if any of the values match a certain condition.  It checks for a condition.
+const anyDeposits = movementsSome.some(mov => mov > 5000);
+console.log(anyDeposits);

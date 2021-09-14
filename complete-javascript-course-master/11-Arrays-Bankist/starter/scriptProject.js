@@ -85,9 +85,9 @@ const displayMovements = function (movements) {
 };
 
 // Applies the reduce() method to an account's transactions (its 'movements' array) in order to then display it as the account's balance in the UI
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, movement) => acc + movement, 0);
-  labelBalance.textContent = `${balance}€`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, movement) => acc + movement, 0);
+  labelBalance.textContent = `${acc.balance}€`;
 };
 
 // Used to calculate and display the three values at the bottom of the app: 'In', 'Out', and 'Interest'
@@ -126,6 +126,13 @@ createUsernames(accounts);
 // Using the find() method to find an object in the 'accounts' array based on a property of that object.  This will be used to Implementing Login and Implementing Transfers
 let currentAccount;
 
+const updateUI = function (acc) {
+  displayMovements(acc.movements);
+  calcDisplayBalance(acc);
+  calcDisplaySummary(acc);
+};
+
+///// Login button functionality. /////
 btnLogin.addEventListener('click', function (event) {
   event.preventDefault(); // Prevent form from submitting right away
   currentAccount = accounts.find(
@@ -144,12 +151,68 @@ btnLogin.addEventListener('click', function (event) {
     inputLoginPin.blur();
 
     // Calculate and display the movements list
-    displayMovements(currentAccount.movements);
-
     // Calculate and display the balance
-    calcDisplayBalance(currentAccount.movements);
-
     // Calculate and display the summary (at the bottom)
-    calcDisplaySummary(currentAccount);
+    updateUI(currentAccount);
   }
+});
+
+///// Transfer Funds button functionality. /////
+btnTransfer.addEventListener('click', function (event) {
+  event.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const targetAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  /* Cleaning the input fields out regardless if the transfer worked or not */
+  inputTransferAmount.value = inputTransferTo.value = '';
+  inputTransferAmount.blur();
+
+  if (
+    amount > 0 &&
+    targetAcc &&
+    currentAccount.balance >= amount &&
+    targetAcc.username !== currentAccount.username
+  ) {
+    /* Adjusting both accounts' movement arrays */
+    currentAccount.movements.push(-amount);
+    targetAcc.movements.push(amount);
+
+    /* Update the UI */
+    updateUI(currentAccount);
+  }
+});
+
+///// Request Loan button functionality.  The bank will only grant a loan if there is at least one deposit that is at least 10% of the requested loan amount. /////
+btnLoan.addEventListener('click', function (event) {
+  event.preventDefault();
+  if (
+    currentAccount.movements.some(mov => mov >= inputLoanAmount.value * 0.1)
+  ) {
+    currentAccount.movements.push(Number(inputLoanAmount.value));
+  }
+  updateUI(currentAccount);
+  inputLoanAmount.value = '';
+  inputLoanAmount.blur();
+});
+
+///// Close Account button functionality. /////
+btnClose.addEventListener('click', function (event) {
+  event.preventDefault();
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    accounts.splice(index, 1);
+
+    /* Log out the currentAccount by hiding the UI */
+    containerApp.style.opacity = 0;
+  }
+
+  /* Clear input field values and remove focus. */
+  inputCloseUsername.value = inputClosePin.value = '';
+  inputClosePin.blur();
 });
