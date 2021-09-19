@@ -67,9 +67,12 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 // Creates the HTML via a template string in order to then insert that HTML into the transactions list in the UI
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
-  movements.forEach(function (movement, index) {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (movement, index) {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -138,21 +141,20 @@ btnLogin.addEventListener('click', function (event) {
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
-  // console.log(currentAccount);
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
-    // Display UI and Welcome Message
+    /* Display UI and Welcome Message */
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
     }.`;
     containerApp.style.opacity = 100;
 
-    // Clear input fields and drop their focus
+    /* Clear input fields and drop their focus */
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    // Calculate and display the movements list
-    // Calculate and display the balance
-    // Calculate and display the summary (at the bottom)
+    /* Calculate and display the movements list
+    Calculate and display the balance
+    Calculate and display the summary (at the bottom) */
     updateUI(currentAccount);
   }
 });
@@ -186,12 +188,11 @@ btnTransfer.addEventListener('click', function (event) {
 ///// Request Loan button functionality.  The bank will only grant a loan if there is at least one deposit that is at least 10% of the requested loan amount. /////
 btnLoan.addEventListener('click', function (event) {
   event.preventDefault();
-  if (
-    currentAccount.movements.some(mov => mov >= inputLoanAmount.value * 0.1)
-  ) {
-    currentAccount.movements.push(Number(inputLoanAmount.value));
+  const amount = Number(inputLoanAmount.value);
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
   }
-  updateUI(currentAccount);
   inputLoanAmount.value = '';
   inputLoanAmount.blur();
 });
@@ -215,4 +216,12 @@ btnClose.addEventListener('click', function (event) {
   /* Clear input field values and remove focus. */
   inputCloseUsername.value = inputClosePin.value = '';
   inputClosePin.blur();
+});
+
+///// Sort button functionality /////
+let sorted = false;
+btnSort.addEventListener('click', function (event) {
+  event.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });

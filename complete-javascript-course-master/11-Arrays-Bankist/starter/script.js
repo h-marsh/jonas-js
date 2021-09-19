@@ -319,9 +319,98 @@ const firstWithdrawalArrow = movementsFind.find(mov => mov < 0);
 const movementsSome = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // Include only checks for a specific value.  It checks for equality.
-console.log(movementsReduce);
+// console.log(movementsReduce);
 // console.log(movementsSome.includes(-130));
 
 // some() can determine if any of the values match a certain condition.  It checks for a condition.
 const anyDeposits = movementsSome.some(mov => mov > 5000);
-console.log(anyDeposits);
+// console.log(anyDeposits);
+
+// the every() method
+const movementsEvery = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////////// flat and flatMap ///////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const arrFlat = [[1, 2, 3], [4, 5, 6], 7, 8];
+// console.log(arr);
+// console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+// console.log(arrDeep.flat(2));
+
+// flat
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => (acc += mov), 0);
+// console.log(overallBalance);
+
+// flatMap
+const overallBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => (acc += mov), 0);
+// console.log(overallBalance2);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////////// Sorting Arrays ///////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const owners = ['jonas', 'zach', 'adam', 'martha'];
+// console.log(owners.sort());
+// console.log(owners);
+
+const movementsSort = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// console.log(movementsSort);
+// console.log(movementsSort.sort());
+
+// Sorting numbers properly (which requires passing a callback function into sort())
+
+// return is negative, a is before b (remain the same)
+// return is positive, b is before a (switch order)
+// console.log(movementsSort);
+movementsSort.sort((a, b) => {
+  if (a > b) return 1;
+  if (b > a) return -1;
+});
+// console.log(movementsSort);
+
+/* A shorter way */
+movementsSort.sort((a, b) => a - b);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////// More Ways of Creating and Filling Arrays ///////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* using the Array() constructor function */
+const x = new Array(7);
+// console.log(x);
+
+/* using the fill() method to fill the 'x' array */
+// x.fill(1);
+// x.fill(1, 3, 6);
+// console.log(x);
+
+/* fill() on a populated array */
+const arrFill = [1, 2, 3, 4, 5, 6, 7];
+// console.log(arrFill);
+
+arrFill.fill(2, 2, 5);
+// console.log(arrFill);
+
+// Array.from()
+const arrayFrom = Array.from({ length: 7 }, () => 1);
+// console.log(arrayFrom);
+
+const z = Array.from({ length: 7 }, (_, index) => index + 1);
+// console.log(z);
+
+// using Array.from() on querySelectorAll nodelist
+const movementsUI = Array.from(
+  document.querySelectorAll('.movements__value'),
+  element => Number(element.textContent.replace('€', ''))
+);
+
+// using the spread operator to convert the nodelist to an array
+const movementsUI2 = [...document.querySelectorAll('.movements__value')];
