@@ -234,21 +234,21 @@ const usernameArrow = userComputingUsernames
 
 const movementsFilter = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const deposits = movementsFilter.filter(function (movement) {
+const depositsFilter = movementsFilter.filter(function (movement) {
   return movement > 0;
 });
 
 // console.log(movementsFilter);
-// console.log(deposits);
+// console.log(depositsFilter);
 
 // Doing the same thing but with a for-loop, which requires an empty array to be created outside.
 const depositsForLoop = [];
 for (const mov of movementsFilter) if (mov > 0) depositsForLoop.push(mov);
 
-const withdrawals = movementsFilter.filter(mov => mov < 0);
+const withdrawalsFilter = movementsFilter.filter(mov => mov < 0);
 
 // console.log(movementsFilter);
-// console.log(withdrawals);
+// console.log(withdrawalsFilter);
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 ////////////////////////////////////////// The reduce Method //////////////////////////////////////////
@@ -384,7 +384,7 @@ movementsSort.sort((a, b) => a - b);
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
 /* using the Array() constructor function */
-const x = new Array(7);
+// const x = new Array(7);
 // console.log(x);
 
 /* using the fill() method to fill the 'x' array */
@@ -403,14 +403,68 @@ arrFill.fill(2, 2, 5);
 const arrayFrom = Array.from({ length: 7 }, () => 1);
 // console.log(arrayFrom);
 
-const z = Array.from({ length: 7 }, (_, index) => index + 1);
+// const z = Array.from({ length: 7 }, (_, index) => index + 1);
 // console.log(z);
 
 // using Array.from() on querySelectorAll nodelist
-const movementsUI = Array.from(
-  document.querySelectorAll('.movements__value'),
-  element => Number(element.textContent.replace('€', ''))
-);
+// const movementsUI = Array.from(
+//   document.querySelectorAll('.movements__value'),
+//   element => Number(element.textContent.replace('€', ''))
+// );
 
 // using the spread operator to convert the nodelist to an array
-const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+// const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////// Array Methods Practice ///////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((sum, mov) => sum + mov, 0);
+
+// console.log(bankDepositSum);
+
+const numDeposits1000Simple = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov >= 1000).length;
+
+/* The same as above but with reduce() */
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, element) => (element >= 1000 ? ++count : count), 0); // Note the prefixed ++ operator
+
+// console.log(numDeposits1000);
+
+/* Using reduce() to create a new object */
+const { deposits, withdrawals } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, element) => {
+      sums[element > 0 ? 'deposits' : 'withdrawals'] += element;
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+console.log(deposits, withdrawals);
+
+/* converting a string to title-case */
+const convertTitleCase = function (title) {
+  const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with', 'and'];
+
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+  return capitalize(titleCase);
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
+console.log(convertTitleCase('a an the but or on in with hi'));
