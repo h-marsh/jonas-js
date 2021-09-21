@@ -59,10 +59,12 @@ dogs.forEach(function (dog) {
 // little. Hint: Some dogs have multiple owners, so you first need to find Sarah in
 // the owners array.
 
-dogs.forEach(function (dog) {
-	if (dog.owners.includes('Sarah'))
-		console.log(dog.curFood > dog.recommendedFood ? 'Too Much' : 'Too Little');
-});
+const dogSarah = dogs.find((dog) => dog.owners.includes('Sarah'));
+console.log(
+	`Sarah's dog is eating too ${
+		dogSarah.curFood > dogSarah.recommendedFood ? 'much' : 'little'
+	} food.`
+);
 
 // 3. Create an array containing all owners of dogs who eat too much
 // ('ownersEatTooMuch') and an array with all owners of dogs who eat too little
@@ -93,27 +95,22 @@ console.log(dogs.some((dog) => dog.curFood === dog.recommendedFood));
 // (just true or false) Eating an okay amount means the dog's current food portion is within a range 10%
 // above and 10% below the recommended portion
 
-console.log(
-	dogs.some(
-		(dog) =>
-			dog.recommendedFood * 0.9 <= dog.curFood <= dog.recommendedFood * 1.1
-	)
-);
+const checkEatingOkay = (dog) =>
+	dog.curFood >= dog.recommendedFood * 0.9 &&
+	dog.curFood <= dog.recommendedFood * 1.1;
+
+console.log(dogs.some(checkEatingOkay));
 
 // 7. Create an array containing the dogs that are eating an okay amount of food (try
 // to reuse the condition used in 6.)
 
-const dogsOkayFood = dogs.filter(
-	(dog) =>
-		dog.curFood >= dog.recommendedFood * 0.9 &&
-		dog.curFood <= dog.recommendedFood * 1.1
-);
+const dogsOkayFood = dogs.filter(checkEatingOkay);
 
 // 8. Create a shallow copy of the 'dogs' array and sort it by recommended food
 // portion in an ascending order (keep in mind that the portions are inside the
 // array's objects)
 
 const dogsSorted = dogs
-	.flatMap((dog) => dog.recommendedFood)
-	.sort((a, b) => a - b);
+	.slice()
+	.sort((a, b) => a.recommendedFood - b.recommendedFood);
 console.log(dogsSorted);
