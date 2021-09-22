@@ -54,3 +54,77 @@ const accounts = [account1, account2];
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 /////////////////////////////////// Converting and Checking Numbers ////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// console.log(23 === 23.0);
+
+/* 0.1 being a pain */
+// console.log(0.1 + 0.2);
+// console.log(0.1 + 0.2 === 0.3);
+
+/* converting strings to numbers */
+// console.log(Number('33'));
+// console.log(+'33');
+
+/* parsing with Number.parseInt() */
+// console.log(Number.parseInt('30p!x', 10));
+// console.log(Number.parseInt('3gdfbrth24163460px', 10));
+// console.log(Number.parseInt('ab30px', 10));
+
+/* parsing with Number.parseFloat() */
+// console.log(Number.parseFloat('2.5rem'));
+
+/* using Number.isNaN() */
+// console.log(Number.isNaN(123));
+// console.log(Number.isNaN('123'));
+// console.log(Number.isNaN(Number('123x')));
+
+/* Number.isFinite() is better for checking if a value is a number or not*/
+// console.log(Number.isFinite(123));
+// console.log(Number.isFinite(Number('20c')));
+// console.log(Number.isFinite(33 / 0));
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////////////// Math and Rounding //////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+Math.sqrt(25);
+25 ** (1 / 2);
+8 ** (1 / 3);
+
+Math.min(1, 67, 9, 20, 4);
+Math.max(1, '67', 9, 20, 4);
+Math.max(1, '67a', 9, 20, 4);
+
+/* Math namespace constants */
+Math.PI * Number.parseFloat('10px') ** 2;
+Math.trunc(Math.random() * 6);
+
+/* random number function */
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min) + 1) + min;
+
+/* rounding integers */
+// console.log(Math.trunc(23.2));
+// console.log(Math.trunc(23.7));
+
+// console.log(Math.round(23.4));
+// console.log(Math.round(23.7));
+
+// console.log(Math.ceil(23.1));
+// console.log(Math.ceil(23.7));
+
+// console.log(Math.floor(23.1));
+// console.log(Math.floor(23.7));
+
+/* floor vs trunc */
+// console.log(Math.trunc(-23.7));
+// console.log(Math.floor(-23.7));
+
+// console.log(Math.trunc(-23.1));
+// console.log(Math.floor(-23.1));
+
+/* rounding floats */
+console.log((2.7).toFixed(0));
+console.log((2.7).toFixed(3));
+console.log((2.1).toFixed(0));
+console.log((2.1126).toFixed(3));
