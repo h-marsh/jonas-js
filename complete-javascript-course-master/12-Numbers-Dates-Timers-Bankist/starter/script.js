@@ -124,7 +124,11 @@ const randomInt = (min, max) =>
 // console.log(Math.floor(-23.1));
 
 /* rounding floats */
-console.log((2.7).toFixed(0));
-console.log((2.7).toFixed(3));
-console.log((2.1).toFixed(0));
-console.log((2.1126).toFixed(3));
+// console.log((2.7).toFixed(0));
+// console.log((2.7).toFixed(3));
+// console.log((2.1).toFixed(0));
+// console.log((2.1126).toFixed(3));
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////// The Remainder Operator ////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
