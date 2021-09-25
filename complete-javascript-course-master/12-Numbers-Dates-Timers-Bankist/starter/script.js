@@ -133,14 +133,68 @@ const randomInt = (min, max) =>
 /////////////////////////////////////// The Remainder Operator ////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-console.log(5 % 2);
+// console.log(5 % 2);
 
-/* evens and odds */
-console.log(30 % 2 === 0); // even
-console.log(33 % 2 === 0); // odd
+// /* evens and odds */
+// console.log(30 % 2 === 0); // even
+// console.log(33 % 2 === 0); // odd
 
-const isEven = n => n % 2 === 0;
+// const isEven = n => n % 2 === 0;
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 ///////////////////////////////////////// Working with BigInt //////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// console.log(Number.MAX_SAFE_INTEGER);
+// console.log(1233425664569007199254740991);
+// console.log(1233425664569007199254740991n);
+// console.log(BigInt(1233425664569007199254740991));
+
+/* using operators with bigint */
+// console.log(BigInt(10000) + 10000n);
+// console.log(10000n * 123123123123123123123123123123123123123n);
+
+// /* exceptions */
+// console.log(20n > 15); // works
+// console.log(20n === 20); // doesnt work because strict comparisons don't do type coercion
+// console.log(typeof 20n);
+// console.log(20n == '20'); // works because loose comparison does type coercion
+
+/* division */
+// console.log(10n / 3n);
+// console.log(11n / 3n);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////////////// Creating Dates ////////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* create a date */
+// Current date and time
+const now = new Date();
+// console.log(now);
+
+// Parse the date from a date string
+const dateString = new Date('December 24, 2006');
+// console.log(dateString);
+
+// Passing in year, month, day, hour, minute, second
+const date = new Date(1995, 11, 25, 6, 30, 0);
+// console.log(date);
+
+// Passing in milliseconds after unix time
+const dateUnix = new Date(3 * 24 * 60 * 60 * 1000);
+// console.log(dateUnix);
+
+// Working with dates via methods on the date object
+const future = new Date(2095, 11, 25, 6, 30);
+
+// console.log(future.getFullYear());
+// console.log(future.getMonth() + 1); // 0 based months, so add 1 to get the true month.
+// console.log(future.getDate()); // Gets the day, weird name for this method.
+// console.log(future.toISOString());
+// console.log(future.getTime());
+// console.log(new Date(3975651000000));
+
+console.log(future);
+future.setFullYear(3095);
+console.log(future);
