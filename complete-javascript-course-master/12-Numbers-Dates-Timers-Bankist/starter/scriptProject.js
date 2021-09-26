@@ -21,9 +21,9 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2021-09-23T17:01:17.194Z',
+    '2021-09-25T10:51:36.790Z',
+    '2021-09-26T23:36:17.929Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -78,21 +78,44 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
+///////////////////////////////////////////////// Functions
+// Function for formatting dates
+const formatMovementDate = function (date) {
+  const calcDaysPassed = function (date1, date2) {
+    return Math.round(Math.abs((date2 - date1) / (1000 * 60 * 60 * 24)));
+  };
+  const daysPassed = calcDaysPassed(new Date(), date);
+
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed <= 7) return `${daysPassed} days ago.`;
+  else {
+    const day = `${date.getDate()}`.padStart(2, 0);
+    const month = `${date.getMonth() + 1}`.padStart(2, 0);
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
+};
+
 // Creates the HTML via a template string in order to then insert that HTML into the transactions list in the UI
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (account, sort = false) {
   containerMovements.innerHTML = '';
 
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort
+    ? account.movements.slice().sort((a, b) => a - b)
+    : account.movements;
 
   movs.forEach(function (movement, index) {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
+
+    const date = new Date(account.movementsDates[index]);
+    const displayDate = formatMovementDate(date);
 
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${
       index + 1
-    } ${type}</div>
+    } ${type}</div> <div class='movements__date'>${displayDate}</div>
       <div class="movements__value">${movement.toFixed(2)}€</div>
     </div>`;
 
@@ -101,9 +124,12 @@ const displayMovements = function (movements, sort = false) {
 };
 
 // Applies the reduce() method to an account's transactions (its 'movements' array) in order to then display it as the account's balance in the UI
-const calcDisplayBalance = function (acc) {
-  acc.balance = acc.movements.reduce((acc, movement) => acc + movement, 0);
-  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
+const calcDisplayBalance = function (account) {
+  account.balance = account.movements.reduce(
+    (account, movement) => account + movement,
+    0
+  );
+  labelBalance.textContent = `${account.balance.toFixed(2)}€`;
 };
 
 // Used to calculate and display the three values at the bottom of the app: 'In', 'Out', and 'Interest'
@@ -127,9 +153,9 @@ const calcDisplaySummary = function (account) {
 };
 
 // This takes the 'accounts' array, accesses the individual accounts to then access each 'owner' property, in order to create a new property of that account's username (owner's initials)
-const createUsernames = function (accs) {
-  accs.forEach(function (acc) {
-    acc.username = acc.owner
+const createUsernames = function (accounts) {
+  accounts.forEach(function (account) {
+    account.username = account.owner
       .toLowerCase()
       .split(' ')
       .map(name => name[0])
@@ -139,14 +165,19 @@ const createUsernames = function (accs) {
 
 createUsernames(accounts);
 
-// Using the find() method to find an object in the 'accounts' array based on a property of that object.  This will be used to Implementing Login and Implementing Transfers
+const updateUI = function (account) {
+  displayMovements(account);
+  calcDisplayBalance(account);
+  calcDisplaySummary(account);
+};
+
+////////////////////  EVENT HANDLERS /////////////////////
 let currentAccount;
 
-const updateUI = function (acc) {
-  displayMovements(acc.movements);
-  calcDisplayBalance(acc);
-  calcDisplaySummary(acc);
-};
+/* this is to fake an account being logged in */
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
 
 ///// Login button functionality. /////
 btnLogin.addEventListener('click', function (event) {
@@ -160,6 +191,16 @@ btnLogin.addEventListener('click', function (event) {
       currentAccount.owner.split(' ')[0]
     }.`;
     containerApp.style.opacity = 100;
+
+    /* adding the current date */
+    const now = new Date();
+    const day = `${now.getDate()}`.padStart(2, 0);
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    const year = `${now.getFullYear()}`.padStart(2, 0);
+    const hour = `${now.getHours()}`.padStart(2, 0);
+    const minute = `${now.getMinutes()}`.padStart(2, 0);
+
+    labelDate.textContent = `${month}/${day}/${year}, ${hour}:${minute}`;
 
     /* Clear input fields and drop their focus */
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -193,6 +234,10 @@ btnTransfer.addEventListener('click', function (event) {
     currentAccount.movements.push(-amount);
     targetAcc.movements.push(amount);
 
+    /* add transfer date */
+    currentAccount.movementsDates.push(new Date().toISOString());
+    targetAcc.movementsDates.push(new Date().toISOString());
+
     /* Update the UI */
     updateUI(currentAccount);
   }
@@ -204,6 +249,10 @@ btnLoan.addEventListener('click', function (event) {
   const amount = Math.floor(inputLoanAmount.value);
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     currentAccount.movements.push(amount);
+
+    /* add loan date */
+    currentAccount.movementsDates.push(new Date().toISOString());
+
     updateUI(currentAccount);
   }
   inputLoanAmount.value = '';
@@ -235,6 +284,6 @@ btnClose.addEventListener('click', function (event) {
 let sorted = false;
 btnSort.addEventListener('click', function (event) {
   event.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
   sorted = !sorted;
 });

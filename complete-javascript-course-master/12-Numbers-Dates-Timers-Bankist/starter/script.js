@@ -186,7 +186,7 @@ const dateUnix = new Date(3 * 24 * 60 * 60 * 1000);
 // console.log(dateUnix);
 
 // Working with dates via methods on the date object
-const future = new Date(2095, 11, 25, 6, 30);
+const futureCreating = new Date(2095, 11, 25, 6, 30);
 
 // console.log(future.getFullYear());
 // console.log(future.getMonth() + 1); // 0 based months, so add 1 to get the true month.
@@ -195,6 +195,28 @@ const future = new Date(2095, 11, 25, 6, 30);
 // console.log(future.getTime());
 // console.log(new Date(3975651000000));
 
-console.log(future);
-future.setFullYear(3095);
-console.log(future);
+// console.log(future);
+// future.setFullYear(3095);
+// console.log(future);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////////// Operations with Dates ////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const futureOperations = new Date(2095, 11, 25, 6, 30);
+// console.log(futureOperations);
+// console.log(+futureOperations);
+
+const calcDaysPassed = function (date1, date2) {
+  return Math.abs((date2 - date1) / (1000 * 60 * 60 * 24));
+};
+
+const days1 = calcDaysPassed(
+  new Date(2095, 11, 5, 10, 30),
+  new Date(2095, 11, 15)
+);
+console.log(days1);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////// Internationalizing Dates (Intl) ///////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
