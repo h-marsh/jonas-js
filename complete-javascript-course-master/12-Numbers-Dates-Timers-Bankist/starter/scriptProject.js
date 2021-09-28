@@ -80,7 +80,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 ///////////////////////////////////////////////// Functions
 // Function for formatting dates
-const formatMovementDate = function (date) {
+const formatMovementDate = function (date, locale) {
   const calcDaysPassed = function (date1, date2) {
     return Math.round(Math.abs((date2 - date1) / (1000 * 60 * 60 * 24)));
   };
@@ -90,10 +90,7 @@ const formatMovementDate = function (date) {
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago.`;
   else {
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
+    return new Intl.DateTimeFormat(locale).format(date);
   }
 };
 
@@ -109,7 +106,7 @@ const displayMovements = function (account, sort = false) {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(account.movementsDates[index]);
-    const displayDate = formatMovementDate(date);
+    const displayDate = formatMovementDate(date, account.locale);
 
     const html = `
     <div class="movements__row">
@@ -193,14 +190,23 @@ btnLogin.addEventListener('click', function (event) {
     containerApp.style.opacity = 100;
 
     /* adding the current date */
+    /* learning internationalization api */
     const now = new Date();
-    const day = `${now.getDate()}`.padStart(2, 0);
-    const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    const year = `${now.getFullYear()}`.padStart(2, 0);
-    const hour = `${now.getHours()}`.padStart(2, 0);
-    const minute = `${now.getMinutes()}`.padStart(2, 0);
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+    };
 
-    labelDate.textContent = `${month}/${day}/${year}, ${hour}:${minute}`;
+    const locale = navigator.language;
+    console.log(locale);
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
 
     /* Clear input fields and drop their focus */
     inputLoginUsername.value = inputLoginPin.value = '';

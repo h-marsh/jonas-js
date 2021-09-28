@@ -170,7 +170,7 @@ const randomInt = (min, max) =>
 
 /* create a date */
 // Current date and time
-const now = new Date();
+const nowCreate = new Date();
 // console.log(now);
 
 // Parse the date from a date string
@@ -215,8 +215,30 @@ const days1 = calcDaysPassed(
   new Date(2095, 11, 5, 10, 30),
   new Date(2095, 11, 15)
 );
-console.log(days1);
+// console.log(days1);
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 /////////////////////////////////// Internationalizing Dates (Intl) ///////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* experimenting with internationalization api */
+const nowIntl = new Date();
+const optionsObject = {
+  hour: 'numeric',
+  minute: 'numeric',
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+  weekday: 'long',
+};
+
+const dateIntl = new Intl.DateTimeFormat('en-US', optionsObject).format(
+  nowIntl
+);
+
+// console.log(nowIntl);
+// console.log(dateIntl);
+
+/* retrieving the locale from the user's browser */
+const locale = navigator.language;
+console.log(locale);
