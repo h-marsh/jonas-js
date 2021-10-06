@@ -4,9 +4,6 @@
 /////////////////////////////////////////////////
 // BANKIST APP
 
-/////////////////////////////////////////////////
-// CONSIDER REPLACING WITH STUFF YOU WROTE YOURSELF FROM LAST SECTION
-
 // DIFFERENT DATA! Contains movement dates, currency and locale
 
 const account1 = {
@@ -94,6 +91,14 @@ const formatMovementDate = function (date, locale) {
   }
 };
 
+// for formatting currencies
+const formatCurrency = function (value, locale, currency) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(value);
+};
+
 // Creates the HTML via a template string in order to then insert that HTML into the transactions list in the UI
 const displayMovements = function (account, sort = false) {
   containerMovements.innerHTML = '';
@@ -108,12 +113,18 @@ const displayMovements = function (account, sort = false) {
     const date = new Date(account.movementsDates[index]);
     const displayDate = formatMovementDate(date, account.locale);
 
+    const formattedMov = formatCurrency(
+      movement,
+      account.locale,
+      account.currency
+    );
+
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div> <div class='movements__date'>${displayDate}</div>
-      <div class="movements__value">${movement.toFixed(2)}€</div>
+      <div class="movements__value">${formattedMov}</div>
     </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -126,7 +137,12 @@ const calcDisplayBalance = function (account) {
     (account, movement) => account + movement,
     0
   );
-  labelBalance.textContent = `${account.balance.toFixed(2)}€`;
+
+  labelBalance.textContent = formatCurrency(
+    account.balance,
+    account.locale,
+    account.currency
+  );
 };
 
 // Used to calculate and display the three values at the bottom of the app: 'In', 'Out', and 'Interest'
@@ -134,19 +150,33 @@ const calcDisplaySummary = function (account) {
   const incomes = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  labelSumIn.textContent = formatCurrency(
+    incomes,
+    account.locale,
+    account.currency
+  );
 
   const outgoing = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${outgoing.toFixed(2)}€`;
+
+  labelSumOut.textContent = formatCurrency(
+    outgoing,
+    account.locale,
+    account.currency
+  );
 
   const interest = account.movements
     .filter(mov => mov > 0)
     .map(deposit => deposit * account.interestRate)
     .filter(interest => interest >= 1)
     .reduce((acc, interest) => acc + interest, 0);
-  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+
+  labelSumInterest.textContent = formatCurrency(
+    interest,
+    account.locale,
+    account.currency
+  );
 };
 
 // This takes the 'accounts' array, accesses the individual accounts to then access each 'owner' property, in order to create a new property of that account's username (owner's initials)
@@ -168,13 +198,40 @@ const updateUI = function (account) {
   calcDisplaySummary(account);
 };
 
-////////////////////  EVENT HANDLERS /////////////////////
-let currentAccount;
+const startLogoutTimer = function () {
+  /* countdown functionality on its own */
+  const tick = function () {
+    /* convert seconds to minutes: seconds */
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
 
-/* this is to fake an account being logged in */
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+    /* in each callback call, print the remaining time to the UI */
+    labelTimer.textContent = `${min}:${sec}`;
+
+    /* when the time is at 0 seconds, stop timer and log the user out */
+    if (time === 0) {
+      /* stop timer */
+      clearInterval(timer);
+
+      /* log user 'out' i.e. change opacity and change the welcome message lol */
+      containerApp.style.opacity = 0;
+      labelWelcome.textContent = 'Log in to get started';
+    }
+    /* decrease 1 sec */
+    time--;
+  };
+
+  /* set the time to 2 min */
+  let time = 120;
+
+  /* call the timer every second */
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
+////////////////////  EVENT HANDLERS /////////////////////
+let currentAccount, timer;
 
 ///// Login button functionality. /////
 btnLogin.addEventListener('click', function (event) {
@@ -189,8 +246,7 @@ btnLogin.addEventListener('click', function (event) {
     }.`;
     containerApp.style.opacity = 100;
 
-    /* adding the current date */
-    /* learning internationalization api */
+    /* adding the current date/learning internationalization api */
     const now = new Date();
     const options = {
       hour: 'numeric',
@@ -212,9 +268,11 @@ btnLogin.addEventListener('click', function (event) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    /* Calculate and display the movements list
-      Calculate and display the balance
-      Calculate and display the summary (at the bottom) */
+    /* start logout timer, checks if there already is one */
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
+
+    /* Calculate and display the movements list, the balance, and the summary (at the bottom) */
     updateUI(currentAccount);
   }
 });
@@ -246,6 +304,10 @@ btnTransfer.addEventListener('click', function (event) {
 
     /* Update the UI */
     updateUI(currentAccount);
+
+    /* reset the timer */
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -254,15 +316,23 @@ btnLoan.addEventListener('click', function (event) {
   event.preventDefault();
   const amount = Math.floor(inputLoanAmount.value);
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      /* add movement to list */
+      currentAccount.movements.push(amount);
 
-    /* add loan date */
-    currentAccount.movementsDates.push(new Date().toISOString());
+      /* add loan date */
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    updateUI(currentAccount);
+      /* update ui */
+      updateUI(currentAccount);
+    }, 4000);
   }
   inputLoanAmount.value = '';
   inputLoanAmount.blur();
+
+  /* reset the timer */
+  clearInterval(timer);
+  timer = startLogoutTimer();
 });
 
 ///// Close Account button functionality. /////

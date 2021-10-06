@@ -240,5 +240,64 @@ const dateIntl = new Intl.DateTimeFormat('en-US', optionsObject).format(
 // console.log(dateIntl);
 
 /* retrieving the locale from the user's browser */
-const locale = navigator.language;
-console.log(locale);
+// const locale = navigator.language;
+// console.log(locale);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////// Internationalizing Numbers (Intl) //////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// const num = 3884764.23;
+
+// console.log(num);
+// console.log('US:', new Intl.NumberFormat('en-US').format(num));
+// console.log('Germany:', new Intl.NumberFormat('de-DE').format(num));
+// console.log('Syria:', new Intl.NumberFormat('ar-SY').format(num));
+// console.log('Browser:', new Intl.NumberFormat(navigator.language).format(num));
+
+const optionsNum = {
+  style: 'currency',
+  unit: 'celsius',
+  currency: 'GBP',
+};
+
+// console.log(num);
+// console.log('US:', new Intl.NumberFormat('en-US', optionsNum).format(num));
+// console.log('Germany:', new Intl.NumberFormat('de-DE', optionsNum).format(num));
+// console.log('Syria:', new Intl.NumberFormat('ar-SY', optionsNum).format(num));
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////// Timers: setTimeout and setInterval //////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* setTimeout, to execute code in the future since it runs once after the defined time */
+
+// setTimeout(
+//   (top1, top2) => console.log(`Here is the pizza!  It has ${top1} and ${top2}`),
+//   3000,
+//   'olives',
+//   'spinach'
+// );
+// console.log(
+//   'this comes after the timeout in the code...but where will it show in the console?'
+// );
+
+/* cancelling settimeout */
+// const toppings = ['sausage', 'spinach'];
+// const pizzaCancel = setTimeout(
+//   (top1, top2) => console.log(`Here is the pizza!  It has ${top1} and ${top2}`),
+//   3000,
+//   ...toppings
+// );
+
+// if (toppings.includes('spinach')) clearTimeout(pizzaCancel);
+
+/* set interval */
+// setInterval(function () {
+//   const now = new Date();
+//   console.log(now);
+// }, 1000);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////// Implementing a Countdown Timer ///////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
