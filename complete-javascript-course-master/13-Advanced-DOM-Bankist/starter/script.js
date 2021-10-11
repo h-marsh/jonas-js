@@ -7,6 +7,8 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
 const openModal = function (event) {
   event.preventDefault();
@@ -28,6 +30,12 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
   }
+});
+
+/* implementing smooth scrolling */
+btnScrollTo.addEventListener('click', function (event) {
+  const s1coords = section1.getBoundingClientRect();
+  section1.scrollIntoView({ behavior: 'smooth' });
 });
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
@@ -138,3 +146,45 @@ const allButtons = document.getElementsByTagName('button');
 // logo.classList.contains('class');
 
 // logo.className = 'class3';
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////// Implementing Smooth Scrolling ////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// const btnScrollTo = document.querySelector('.btn--scroll-to');
+// const section1 = document.querySelector('#section--1');
+
+// btnScrollTo.addEventListener('click', function (event) {
+//   const s1coords = section1.getBoundingClientRect();
+//   section1.scrollIntoView({ behavior: 'smooth' });
+// });
+
+/* scroll positions */
+// console.log('current scroll (x/y)', window.pageXOffset, window.pageYOffset);
+
+/* viewport coordinates */
+// console.log(
+//   'height/width of viewport',
+//   document.documentElement.clientHeight,
+//   document.documentElement.clientWidth
+// );
+
+/* scrolling */
+// window.scrollTo();
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////// Types of Events and Event Handlers /////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const h1 = document.querySelector('h1');
+
+const alertH1 = function (event) {
+  alert('addEventListener triggered: mouse entered heading');
+};
+
+h1.addEventListener('mouseenter', alertH1);
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+// h1.onmouseenter = function (event) {
+//   alert('onmouseenter (onEvent) triggered: mouse entered heading');
+// };
