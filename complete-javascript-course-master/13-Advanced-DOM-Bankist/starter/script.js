@@ -176,15 +176,49 @@ const allButtons = document.getElementsByTagName('button');
 ///////////////////////////////// Types of Events and Event Handlers /////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const h1 = document.querySelector('h1');
+// const h1 = document.querySelector('h1');
 
-const alertH1 = function (event) {
-  alert('addEventListener triggered: mouse entered heading');
-};
+// const alertH1 = function (event) {
+//   alert('addEventListener triggered: mouse entered heading');
+// };
 
-h1.addEventListener('mouseenter', alertH1);
-setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+// h1.addEventListener('mouseenter', alertH1);
+// setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
 // h1.onmouseenter = function (event) {
 //   alert('onmouseenter (onEvent) triggered: mouse entered heading');
 // };
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////// Event Propagation in Practice ////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* creating random colors to see event bubbling */
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+/* attaching event handlers to the different parts of the nav */
+document
+  .querySelector('.nav__link')
+  .addEventListener('click', function (event) {
+    this.style.backgroundColor = randomColor();
+    console.log('LINK', event.target, event.currentTarget);
+
+    /* stop propagation */
+    // event.stopPropagation();
+  });
+
+document
+  .querySelector('.nav__links')
+  .addEventListener('click', function (event) {
+    this.style.backgroundColor = randomColor();
+    console.log('LINK CONTAINER', event.target, event.currentTarget);
+  });
+
+document.querySelector('.nav').addEventListener('click', function (event) {
+  this.style.backgroundColor = randomColor();
+  console.log('NAVBAR', event.target, event.currentTarget);
+});
