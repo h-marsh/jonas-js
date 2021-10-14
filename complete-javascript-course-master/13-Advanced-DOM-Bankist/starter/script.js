@@ -1,8 +1,5 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
@@ -10,6 +7,7 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+/* Modal window */
 const openModal = function (event) {
   event.preventDefault();
   modal.classList.remove('hidden');
@@ -34,9 +32,19 @@ document.addEventListener('keydown', function (e) {
 
 /* implementing smooth scrolling */
 btnScrollTo.addEventListener('click', function (event) {
-  const s1coords = section1.getBoundingClientRect();
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+/* page navigation bar/smooth scrolling */
+document
+  .querySelector('.nav__links')
+  .addEventListener('click', function (event) {
+    event.preventDefault();
+    if (event.target.classList.contains('nav__link')) {
+      const id = event.target.getAttribute('href');
+      document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 //////////////////////////////////////////////// NOTES ////////////////////////////////////////////////
@@ -201,24 +209,30 @@ const randomColor = () =>
   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 
 /* attaching event handlers to the different parts of the nav */
-document
-  .querySelector('.nav__link')
-  .addEventListener('click', function (event) {
-    this.style.backgroundColor = randomColor();
-    console.log('LINK', event.target, event.currentTarget);
+// document
+//   .querySelector('.nav__link')
+//   .addEventListener('click', function (event) {
+//     this.style.backgroundColor = randomColor();
+//     console.log('LINK', event.target, event.currentTarget);
 
-    /* stop propagation */
-    // event.stopPropagation();
-  });
+//     /* stop propagation */
+//     // event.stopPropagation();
+//   });
 
-document
-  .querySelector('.nav__links')
-  .addEventListener('click', function (event) {
-    this.style.backgroundColor = randomColor();
-    console.log('LINK CONTAINER', event.target, event.currentTarget);
-  });
+// document
+//   .querySelector('.nav__links')
+//   .addEventListener('click', function (event) {
+//     this.style.backgroundColor = randomColor();
+//     console.log('LINK CONTAINER', event.target, event.currentTarget);
+//   });
 
-document.querySelector('.nav').addEventListener('click', function (event) {
-  this.style.backgroundColor = randomColor();
-  console.log('NAVBAR', event.target, event.currentTarget);
-});
+// document.querySelector('.nav').addEventListener('click', function (event) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('NAVBAR', event.target, event.currentTarget);
+// });
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////// Event Delegation: Implementing Page Navigation ///////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* note, most, if not all, of the implementation will be done at the top of the file */
