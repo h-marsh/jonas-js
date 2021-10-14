@@ -61,12 +61,12 @@ document
 
 // const header = document.querySelector('.header');
 
-const allSections = document.querySelectorAll('.section');
-// console.log(allSections);
+// const allSections = document.querySelectorAll('.section');
+// // console.log(allSections);
 
-document.getElementById('section--1');
+// document.getElementById('section--1');
 
-const allButtons = document.getElementsByTagName('button');
+// const allButtons = document.getElementsByTagName('button');
 // console.log(allButtons);
 
 // document.getElementsByClassName('btn');
@@ -236,3 +236,35 @@ const randomColor = () =>
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
 /* note, most, if not all, of the implementation will be done at the top of the file */
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////////// DOM Traversing ///////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* Note, going up and down aren’t necessarily the direction. Going downwards means selecting child elements, going upwards is selecting parent elements, and going to the side is selecting sibling elements. */
+
+/* going downwards (child) via DOM traversing */
+// const highlight = h1.querySelectorAll('.highlight');
+// console.log(h1.children);
+// h1.firstElementChild.style.color = 'red';
+// h1.lastElementChild.style.color = 'blue';
+
+/* going upwards (parent) via DOM traversing */
+// console.log(h1.parentNode);
+// h1.closest('h1').style.background = 'var(--gradient-secondary)';
+
+/* going sideways (sibling) via DOM traversing */
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
+// console.log(h1.parentElement.children);
+
+const h1 = document.querySelector('h1');
+const h1Siblings = [...h1.parentElement.children];
+
+h1Siblings.forEach(function (element) {
+  if (element !== h1) {
+    element.style.transform = 'scale(0.5)';
+  }
+});
