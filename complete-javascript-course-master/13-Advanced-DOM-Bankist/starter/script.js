@@ -46,6 +46,29 @@ document
     }
   });
 
+/* tabbed component */
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (event) {
+  const clicked = event.target.closest('.operations__tab');
+  /* guard clause */
+  if (!clicked) return;
+
+  /* active tab */
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  /* active content area */
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 //////////////////////////////////////////////// NOTES ////////////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
@@ -260,11 +283,11 @@ const randomColor = () =>
 // console.log(h1.nextSibling);
 // console.log(h1.parentElement.children);
 
-const h1 = document.querySelector('h1');
-const h1Siblings = [...h1.parentElement.children];
+// const h1 = document.querySelector('h1');
+// const h1Siblings = [...h1.parentElement.children];
 
-h1Siblings.forEach(function (element) {
-  if (element !== h1) {
-    element.style.transform = 'scale(0.5)';
-  }
-});
+// h1Siblings.forEach(function (element) {
+//   if (element !== h1) {
+//     element.style.transform = 'scale(0.5)';
+//   }
+// });
