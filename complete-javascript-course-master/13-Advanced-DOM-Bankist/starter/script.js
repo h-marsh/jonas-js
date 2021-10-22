@@ -87,8 +87,35 @@ const handleHover = function (event) {
 
 /* bind() is used to pass a psuedo-argument into a handler callback function */
 nav.addEventListener('mouseover', handleHover.bind(0.5));
-
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+const initialCoords = section1.getBoundingClientRect();
+
+/* sticky navigation */
+window.addEventListener('scroll', function () {
+  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+});
+
+/* sticky navigation with the intersection observer API */
+/* the options object and callback to be passed */
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+/* create a new intersection observer, passing in a callback and object of options */
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+
+headerObserver.observe(header);
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 //////////////////////////////////////////////// NOTES ////////////////////////////////////////////////
@@ -312,3 +339,21 @@ const randomColor = () =>
 //     element.style.transform = 'scale(0.5)';
 //   }
 // });
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////// The Intersection Observer API ////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* the options object and callback to be passed */
+// const obsCallback = function (entries, observer) {
+//   entries.forEach(entry => console.log(entry));
+// };
+
+// const obsOptions = {
+//   root: null,
+//   threshold: [0, 0.2],
+// };
+
+// /* create a new intersection observer, passing in a callback and object of options */
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
