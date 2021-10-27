@@ -164,46 +164,97 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imgTargets.forEach(img => imgObserver.observe(img));
 
 /* slider component */
-const slides = document.querySelectorAll('.slide');
-const btnLeft = document.querySelector('.slider__btn--left');
-const btnRight = document.querySelector('.slider__btn--right');
+const slider = function () {
+  const slides = document.querySelectorAll('.slide');
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
 
-let currentSlide = 0;
-const maxSlide = slides.length;
+  let currentSlide = 0;
+  const maxSlide = slides.length;
 
-const goToSlide = function (slide) {
-  slides.forEach(
-    (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
-  );
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+
+  // Next slide
+  const nextSlide = function () {
+    if (currentSlide === maxSlide - 1) {
+      currentSlide = 0;
+    } else {
+      currentSlide++;
+    }
+
+    goToSlide(currentSlide);
+    activeDot(currentSlide);
+  };
+
+  btnRight.addEventListener('click', nextSlide);
+
+  // previous slide
+  const prevSlide = function () {
+    if (currentSlide === 0) {
+      currentSlide = maxSlide - 1;
+    } else {
+      currentSlide--;
+    }
+    goToSlide(currentSlide);
+    activeDot(currentSlide);
+  };
+
+  btnLeft.addEventListener('click', prevSlide);
+
+  /* left and right arrow key functionality */
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'ArrowLeft') prevSlide();
+    else if (event.key === 'ArrowRight') nextSlide();
+  });
+
+  /* dot menu */
+  const dotContainer = document.querySelector('.dots');
+
+  // the function for creating the actual dots
+  const createDots = function () {
+    slides.forEach(function (_, index) {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${index}"></button>`
+      );
+    });
+  };
+
+  // function to show the active dot
+  const activeDot = function (slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+
+  // adding click functionality to the dots to actually go to content slides
+  dotContainer.addEventListener('click', function (event) {
+    if (event.target.classList.contains('dots__dot')) {
+      const slide = event.target.dataset.slide;
+      goToSlide(slide);
+      activeDot(slide);
+    }
+  });
+
+  /* one init function to take care of all the initial function calls */
+  const init = function () {
+    // set the initial condition where they're side by side
+    goToSlide(0);
+    createDots();
+    activeDot(0);
+  };
+  init();
 };
 
-// set the initial condition where they're side by side
-goToSlide(0);
-
-// Next slide
-const nextSlide = function () {
-  if (currentSlide === maxSlide - 1) {
-    currentSlide = 0;
-  } else {
-    currentSlide++;
-  }
-
-  goToSlide(currentSlide);
-};
-
-btnRight.addEventListener('click', nextSlide);
-
-// previous slide
-const prevSlide = function () {
-  if (currentSlide === 0) {
-    currentSlide = maxSlide - 1;
-  } else {
-    currentSlide--;
-  }
-  goToSlide(currentSlide);
-};
-
-btnLeft.addEventListener('click', prevSlide);
+slider();
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 //////////////////////////////////////////////// NOTES ////////////////////////////////////////////////
@@ -445,3 +496,21 @@ const randomColor = () =>
 // /* create a new intersection observer, passing in a callback and object of options */
 // const observer = new IntersectionObserver(obsCallback, obsOptions);
 // observer.observe(section1);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////////// Lifecycle DOM Events ////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// document.addEventListener('DOMContentLoaded', function (event) {
+//   console.log(event);
+// });
+
+// window.addEventListener('load', function (event) {
+//   console.log(event);
+// });
+
+// window.addEventListener('beforeunload', function (event) {
+//   event.preventDefault();
+//   console.log(event);
+//   event.returnValue = '';
+// });
