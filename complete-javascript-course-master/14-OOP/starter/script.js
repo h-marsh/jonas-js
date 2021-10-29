@@ -14,14 +14,34 @@ const Person = function (firstName, birthYear) {
   this.birthYear = birthYear;
 
   // adding methods to the objects (DONT DO IT THIS WAY, prototypes and prototypal inheritance are leveraged instead)
-  this.calcAge = function () {
-    console.log(2021 - this.birthYear);
-  };
+  // this.calcAge = function () {
+  //   console.log(2021 - this.birthYear);
+  // };
 };
 
 const bob = new Person('bob', 1984);
-console.log(bob);
+// console.log(bob);
 
 const jonas = 'jonas';
 
-console.log(jonas instanceof Person);
+// console.log(jonas instanceof Person);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////////////// Prototypes //////////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+Person.prototype.calcAge = function () {
+  console.log(2021 - this.birthYear);
+};
+
+// console.log(Person.prototype);
+
+// console.log(bob.__proto__ === Person.prototype);
+// bob.calcAge();
+// console.log(Person.__proto__);
+// console.log(Person.prototype.isPrototypeOf(bob));
+
+Person.prototype.species = 'Homo Sapien';
+// console.log(bob);
+// console.log(bob.species);
+console.log(bob.hasOwnProperty('firstName'));
+console.log(bob.hasOwnProperty('species'));
