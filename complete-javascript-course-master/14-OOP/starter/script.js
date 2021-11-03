@@ -43,5 +43,9 @@ Person.prototype.calcAge = function () {
 Person.prototype.species = 'Homo Sapien';
 // console.log(bob);
 // console.log(bob.species);
-console.log(bob.hasOwnProperty('firstName'));
-console.log(bob.hasOwnProperty('species'));
+// console.log(bob.hasOwnProperty('firstName'));
+// console.log(bob.hasOwnProperty('species'));
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////// Prototypal Inheritance and the Prototype Chain ///////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
