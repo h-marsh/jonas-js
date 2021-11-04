@@ -50,30 +50,56 @@
 ////////////////////////////// Prototypal Inheritance on Built-in Objects //////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const Person = function (firstName, birthYear) {
-  // instance properties
-  this.firstName = firstName;
-  this.birthYear = birthYear;
-};
+// const Person = function (firstName, birthYear) {
+//   // instance properties
+//   this.firstName = firstName;
+//   this.birthYear = birthYear;
+// };
 
-Person.prototype.calcAge = function () {
-  console.log(2021 - this.birthYear);
-};
+// Person.prototype.calcAge = function () {
+//   console.log(2021 - this.birthYear);
+// };
 
-const bob = new Person('bob', 1984);
-const jonas = new Person('jonas', 1988);
+// const bob = new Person('bob', 1984);
+// const jonas = new Person('jonas', 1988);
 
-Person.prototype.species = 'Homo Sapien';
+// Person.prototype.species = 'Homo Sapien';
 
-console.log(jonas.__proto__ === Person.prototype);
+// // console.log(jonas.__proto__ === Person.prototype);
 
-const arrPrototype = [3, 3, 3, 4, 5, 1, 1, 1, 4, 4, 6, 3, 6, 1];
+// const arrPrototype = [3, 3, 3, 4, 5, 1, 1, 1, 4, 4, 6, 3, 6, 1];
 
-Array.prototype.unique = function () {
-  return [...new Set(this)];
-};
+// Array.prototype.unique = function () {
+//   return [...new Set(this)];
+// };
 
-console.log(arrPrototype.unique());
+// console.log(arrPrototype.unique());
 
 // console.log(arrPrototype.__proto__);
 // console.log(arrPrototype.__proto__ === Array.prototype);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////////////////// ES6 Classes /////////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* class expression */
+// const PersonClass = class {};
+
+/* class declaration */
+class PersonClass {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+  /* methods defined this way are added to the .prototype property, same result as doing it manually above */
+  calcAge() {
+    console.log(2021 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hello, ${this.firstName}`);
+  }
+}
+
+const john = new PersonClass('john', 1957);
+john.calcAge();
