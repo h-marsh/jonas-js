@@ -86,20 +86,70 @@
 // const PersonClass = class {};
 
 /* class declaration */
+// class PersonClass {
+//   constructor(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   }
+//   /* methods defined this way are added to the .prototype property, same result as doing it manually above */
+//   calcAge() {
+//     console.log(2021 - this.birthYear);
+//   }
+
+//   greet() {
+//     console.log(`Hello, ${this.firstName}`);
+//   }
+// }
+
+// const john = new PersonClass('john', 1957);
+// john.calcAge();
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////////// Setters and Getters  ////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const account = {
+  owner: 'jonas',
+  movements: [100, 200, 300, 400, 500],
+
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  set latest(movement) {
+    this.movements.push(movement);
+  },
+};
+
+account.latest = 50;
+// console.log(account.movements);
+
 class PersonClass {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
-  /* methods defined this way are added to the .prototype property, same result as doing it manually above */
+
   calcAge() {
     console.log(2021 - this.birthYear);
   }
 
   greet() {
-    console.log(`Hello, ${this.firstName}`);
+    console.log(`Hello, ${this.fullName}`);
+  }
+
+  get age() {
+    return 2021 - this.birthYear;
+  }
+
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name, bruh.`);
+  }
+
+  get fullName() {
+    return this._fullName;
   }
 }
 
-const john = new PersonClass('john', 1957);
-john.calcAge();
+const person = new PersonClass('Roger Daltry', 1969);
