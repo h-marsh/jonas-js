@@ -108,21 +108,66 @@
 //////////////////////////////////////// Setters and Getters  ////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const account = {
-  owner: 'jonas',
-  movements: [100, 200, 300, 400, 500],
+// const account = {
+//   owner: 'jonas',
+//   movements: [100, 200, 300, 400, 500],
 
-  get latest() {
-    return this.movements.slice(-1).pop();
-  },
+//   get latest() {
+//     return this.movements.slice(-1).pop();
+//   },
 
-  set latest(movement) {
-    this.movements.push(movement);
-  },
+//   set latest(movement) {
+//     this.movements.push(movement);
+//   },
+// };
+
+// account.latest = 50;
+// console.log(account.movements);
+
+// class PersonClass {
+//   constructor(fullName, birthYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birthYear;
+//   }
+
+//   calcAge() {
+//     console.log(2021 - this.birthYear);
+//   }
+
+//   greet() {
+//     console.log(`Hello, ${this.fullName}`);
+//   }
+
+//   get age() {
+//     return 2021 - this.birthYear;
+//   }
+
+//   set fullName(name) {
+//     if (name.includes(' ')) this._fullName = name;
+//     else alert(`${name} is not a full name, bruh.`);
+//   }
+
+//   get fullName() {
+//     return this._fullName;
+//   }
+// }
+
+// const person = new PersonClass('Roger Daltry', 1969);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////////// Static Methods  ///////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
 };
 
-account.latest = 50;
-// console.log(account.movements);
+Person.hey = function () {
+  console.log('Hello!!');
+};
+
+// Person.hey();
 
 class PersonClass {
   constructor(fullName, birthYear) {
@@ -150,6 +195,38 @@ class PersonClass {
   get fullName() {
     return this._fullName;
   }
+
+  static hey = function () {
+    console.log('Hello!!');
+  };
 }
 
-const person = new PersonClass('Roger Daltry', 1969);
+// PersonClass.hey();
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////////////////  Object.create  ///////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const PersonPrototype = {
+  calcAge() {
+    console.log(2021 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonPrototype);
+
+// these properties were only added this way for the sake of the exercise.  normally the object and its properties would be created programmatically.
+steven.name = 'steven';
+steven.birthYear = 1988;
+
+const sarah = Object.create(PersonPrototype);
+
+sarah.init('Sarah Smith', 1984);
+
+console.log(sarah);
+sarah.calcAge();
