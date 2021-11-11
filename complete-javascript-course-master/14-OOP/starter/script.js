@@ -323,3 +323,20 @@ const PersonPrototype = {
 };
 
 const steven = Object.create(PersonPrototype);
+
+const StudentPrototype = Object.create(PersonPrototype);
+
+StudentPrototype.init = function (firstName, birthYear, course) {
+  PersonPrototype.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentPrototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const jay = Object.create(StudentPrototype);
+jay.init('jay', 1969, 'music');
+// console.log(jay);
+// jay.introduce();
+jay.calcAge();
