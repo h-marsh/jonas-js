@@ -19,6 +19,11 @@
 // };
 // };
 
+// ADD METHODS TO THE OBJECT THIS WAY
+// Person.prototype.calcAge = function () {
+//   console.log(2021 - this.birthYear);
+// };
+
 // const bob = new Person('bob', 1984);
 // console.log(bob);
 
@@ -376,28 +381,81 @@ const jay = Object.create(StudentPrototype);
 /////////////////////////// Encapsulation: Protected Properties and Methods ///////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
+// class Account {
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     /* protected (not private) properties */
+//     this._pin = pin;
+//     this._movements = [];
+
+//     console.log(`Thanks for opening an account, ${owner}`);
+//   }
+
+//   // Public interface of the object.
+//   getMovements() {
+//     return this._movements;
+//   }
+
+//   deposit(value) {
+//     this._movements.push(value);
+//   }
+
+//   withdraw(value) {
+//     this.deposit(-value);
+//   }
+// }
+
+// const account1 = new Account('jonas', 'EUR', 1111);
+
+// account1.deposit(250);
+// account1.withdraw(100);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////// Encapsulation: Private Class Fields and Methods ///////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
 class Account {
+  /* public fields (on the instances) */
+  locale = navigator.language;
+
+  /* private fields (on the instances) */
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    /* protected (not private) properties */
-    this._pin = pin;
-    this._movements = [];
+    this.#pin = pin;
 
     console.log(`Thanks for opening an account, ${owner}`);
   }
 
   // Public interface of the object.
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
 
   deposit(value) {
-    this._movements.push(value);
+    this.#movements.push(value);
+    return this;
   }
 
   withdraw(value) {
     this.deposit(-value);
+    return this;
+  }
+
+  /* private methods */
+  #approveLoan(value) {
+    return true;
+  }
+
+  requestLoan(value) {
+    if (this.#approveLoan(value)) {
+      this.deposit(value);
+      return this;
+    }
   }
 }
 
@@ -405,3 +463,15 @@ const account1 = new Account('jonas', 'EUR', 1111);
 
 account1.deposit(250);
 account1.withdraw(100);
+console.log(account1);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////////// Chaining Methods ///////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+account1
+  .deposit(300)
+  .deposit(500)
+  .withdraw(100)
+  .requestLoan(1000)
+  .withdraw(200);
