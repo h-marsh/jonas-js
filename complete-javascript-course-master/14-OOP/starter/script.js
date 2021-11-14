@@ -336,7 +336,72 @@ StudentPrototype.introduce = function () {
 };
 
 const jay = Object.create(StudentPrototype);
-jay.init('jay', 1969, 'music');
+// jay.init('jay', 1969, 'music');
 // console.log(jay);
 // jay.introduce();
-jay.calcAge();
+// jay.calcAge();
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////////// Another Class Example ////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// class Account {
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this.pin = pin;
+//     this.movements = [];
+//     this.locale = navigator.language;
+
+//     console.log(`Thanks for opening an account, ${owner}`);
+//   }
+
+//   // Public interface of the object.
+//   deposit(value) {
+//     this.movements.push(value);
+//   }
+
+//   withdraw(value) {
+//     this.deposit(-value);
+//   }
+// }
+
+// const account1 = new Account('jonas', 'EUR', 1111);
+
+// account1.deposit(250);
+// account1.withdraw(100);
+// console.log(account1.pin);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////// Encapsulation: Protected Properties and Methods ///////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    /* protected (not private) properties */
+    this._pin = pin;
+    this._movements = [];
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  // Public interface of the object.
+  getMovements() {
+    return this._movements;
+  }
+
+  deposit(value) {
+    this._movements.push(value);
+  }
+
+  withdraw(value) {
+    this.deposit(-value);
+  }
+}
+
+const account1 = new Account('jonas', 'EUR', 1111);
+
+account1.deposit(250);
+account1.withdraw(100);
