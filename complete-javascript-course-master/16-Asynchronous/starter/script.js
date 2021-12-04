@@ -108,12 +108,27 @@ const renderCountry = function (data, className = '') {
 // request.send();
 
 /* AJAX calls with Fetch API */
-const request = fetch('https://restcountries.com/v2/name/portugal');
+// const request = fetch('https://restcountries.com/v2/name/portugal');
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 ////////////////////////////////////////  Consuming Promises  ////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
+// const getCountryData = function (country) {
+//   fetch(`https://restcountries.com/v2/name/${country}`)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       renderCountry(data[0]);
+//     });
+// };
+
+/* a cleaner version */
 const getCountryData = function (country) {
-  const request = fetch(`https://restcountries.com/v2/name/${country}`);
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(response => response.json())
+    .then(data => renderCountry(data[0]));
 };
+
+getCountryData('spain');
