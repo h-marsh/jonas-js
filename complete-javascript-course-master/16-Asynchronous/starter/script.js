@@ -125,10 +125,58 @@ const renderCountry = function (data, className = '') {
 // };
 
 /* a cleaner version */
+// const getCountryData = function (country) {
+//   fetch(`https://restcountries.com/v2/name/${country}`)
+//     .then(response => response.json())
+//     .then(data => renderCountry(data[0]));
+// };
+
+// getCountryData('spain');
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////////  Chaining Promises  /////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// const getCountryData = function (country) {
+//   /* country 1 (original) */
+//   fetch(`https://restcountries.com/v2/name/${country}`)
+//     .then(response => response.json())
+//     .then(data => {
+//       renderCountry(data[0]);
+
+//       /* country 2 (neighbor) */
+//       const neighbor = data[0].borders[0];
+//       return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//       renderCountry(data, 'neighbour');
+
+//       /* country 3 (neighbor) */
+//       const neighbor2 = data.borders[0];
+//       return fetch(`https://restcountries.com/v2/alpha/${neighbor2}`);
+//     })
+//     .then(response => response.json())
+//     .then(data => renderCountry(data, 'neighbour'));
+// };
+
 const getCountryData = function (country) {
+  /* country 1 (original) */
   fetch(`https://restcountries.com/v2/name/${country}`)
     .then(response => response.json())
-    .then(data => renderCountry(data[0]));
+    .then(data => {
+      renderCountry(data[0]);
+
+      /* country 2 (neighbor) */
+      const neighbor = data[0].borders[0];
+      return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'));
 };
 
-getCountryData('spain');
+// getCountryData('spain');
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////  Handling Rejected Promises  ////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
