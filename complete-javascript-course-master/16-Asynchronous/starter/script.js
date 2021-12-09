@@ -65,7 +65,6 @@ const renderCountry = function (data, className = '') {
     `;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
 };
 
 // const getCountryDataAndNeighbor = function (country) {
@@ -160,7 +159,7 @@ const renderCountry = function (data, className = '') {
 //     .then(data => renderCountry(data, 'neighbour'));
 // };
 
-const getCountryData = function (country) {
+const getCountryDataChaining = function (country) {
   /* country 1 (original) */
   fetch(`https://restcountries.com/v2/name/${country}`)
     .then(response => response.json())
@@ -180,3 +179,31 @@ const getCountryData = function (country) {
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 ////////////////////////////////////  Handling Rejected Promises  ////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const displayError = function (message) {
+  countriesContainer.insertAdjacentText('beforeend', message);
+};
+
+const getCountryDataRejected = function (country) {
+  /* country 1 (original) */
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(response => response.json())
+    .then(data => {
+      renderCountry(data[0]);
+
+      /* country 2 (neighbor) */
+      const neighbor = data[0].borders[0];
+      return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(error => {
+      console.error(`${error} 💥💥💥`);
+      displayError(`Something went wrong 😢 ${error.message}`);
+    })
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+btn.addEventListener('click', function () {
+  getCountryDataRejected('spain');
+});
