@@ -46,26 +46,26 @@ const countriesContainer = document.querySelector('.countries');
 ///////////////////////////////////////////  Callback Hell  ///////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const renderCountry = function (data, className = '') {
-  const html = `
-    <article class="country ${className}">
-        <img class="country__img" src="${data.flag}" />
-        <div class="country__data">
-            <h3 class="country__name">${data.name}</h3>
-            <h4 class="country__region">${data.region}</h4>
-            <p class="country__row"><span>👫</span>${(
-              Number(data.population) / 1000000
-            ).toFixed(1)} million people</p>
-            <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
-            <p class="country__row"><span>💰</span>${
-              data.currencies[0].code
-            }</p>
-        </div>
-    </article>
-    `;
+// const renderCountry = function (data, className = '') {
+//   const html = `
+//     <article class="country ${className}">
+//         <img class="country__img" src="${data.flag}" />
+//         <div class="country__data">
+//             <h3 class="country__name">${data.name}</h3>
+//             <h4 class="country__region">${data.region}</h4>
+//             <p class="country__row"><span>👫</span>${(
+//               Number(data.population) / 1000000
+//             ).toFixed(1)} million people</p>
+//             <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+//             <p class="country__row"><span>💰</span>${
+//               data.currencies[0].code
+//             }</p>
+//         </div>
+//     </article>
+//     `;
 
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-};
+//   countriesContainer.insertAdjacentHTML('beforeend', html);
+// };
 
 // const getCountryDataAndNeighbor = function (country) {
 //   /* ajax call country 1 */
@@ -212,40 +212,88 @@ const displayError = function (message) {
 /////////////////////////////////////  Throwing Errors Manually   /////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const getJSON = function (url, errorMsg = 'Something went wrong.') {
-  return fetch(url).then(response => {
-    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
-    return response.json();
-  });
+// const getJSON = function (url, errorMsg = 'Something went wrong.') {
+//   return fetch(url).then(response => {
+//     if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+//     return response.json();
+//   });
+// };
+
+// const getCountryDataManually = function (country) {
+//   /* country 1 (original) */
+//   getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
+//     .then(data => {
+//       renderCountry(data[0]);
+
+//       /* country 2 (neighbor) */
+
+//       if (!data[0].borders) {
+//         throw new Error('No neighbors');
+//       }
+
+//       const neighbor = data[0].borders[0];
+
+//       return getJSON(
+//         `https://restcountries.com/v2/alpha/${neighbor}`,
+//         'Neighbor not found'
+//       );
+//     })
+//     .then(data => renderCountry(data, 'neighbour'))
+//     .catch(error => {
+//       console.error(`${error} 💥💥💥`);
+//       displayError(`Something went wrong 😢 ${error.message}`);
+//     })
+//     .finally(() => (countriesContainer.style.opacity = 1));
+// };
+
+// btn.addEventListener('click', function () {
+//   getCountryDataManually('australia');
+// });
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////////////  Coding Challenge #1   ///////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const renderCountry = function (data, className = '') {
+  const html = `
+    <article class="country ${className}">
+        <img class="country__img" src="${data.flag}" />
+        <div class="country__data">
+            <h3 class="country__name">${data.name}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${(
+              Number(data.population) / 1000000
+            ).toFixed(1)} million people</p>
+            <p class="country__row"><span>😃</span>${data.languages[0].name}</p>
+            <p class="country__row"><span>💰</span>${
+              data.currencies[0].code
+            }</p>
+        </div>
+    </article>
+    `;
+
+  countriesContainer.insertAdjacentHTML('beforeend', html);
 };
 
-const getCountryDataManually = function (country) {
-  /* country 1 (original) */
-  getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
-    .then(data => {
-      renderCountry(data[0]);
-
-      /* country 2 (neighbor) */
-
-      if (!data[0].borders) {
-        throw new Error('No neighbors');
-      }
-
-      const neighbor = data[0].borders[0];
-
-      return getJSON(
-        `https://restcountries.com/v2/alpha/${neighbor}`,
-        'Neighbor not found'
-      );
+/* this will get the relevant geo-info based on provided coordinates */
+const whereAmI = function (lat, lng) {
+  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Too many requests: (${response.status})`);
+      return response.json();
     })
-    .then(data => renderCountry(data, 'neighbour'))
-    .catch(error => {
-      console.error(`${error} 💥💥💥`);
-      displayError(`Something went wrong 😢 ${error.message}`);
-    })
+    .then(data => fetch(`https://restcountries.com/v2/name/${data.country}`))
+    .then(response => response.json())
+    .then(data => renderCountry(data[0]))
+    .catch(error => console.log(error))
     .finally(() => (countriesContainer.style.opacity = 1));
 };
 
 btn.addEventListener('click', function () {
-  getCountryDataManually('australia');
+  whereAmI('-33.933', '18.474');
 });
+
+// whereAmI(' 52.508', '13.381 ');
+// whereAmI(' 19.037', '72.873');
+// whereAmI('-33.933', '18.474');

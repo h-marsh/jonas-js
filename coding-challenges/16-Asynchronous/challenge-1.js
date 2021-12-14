@@ -39,8 +39,13 @@ import fetch from 'node-fetch';
 
 const whereAmI = function (lat, lng) {
 	fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-		.then((response) => response.json())
-		.then((data) => console.log(`You are in ${data.city}, ${data.country}.`));
+		.then((response) => {
+			if (!response.ok)
+				throw new Error(`Too many requests: (${response.status})`);
+			return response.json();
+		})
+		.then((data) => console.log(`You are in ${data.city}, ${data.country}.`))
+		.catch((error) => console.log(error));
 };
 
 whereAmI('52.508', '13.381');
