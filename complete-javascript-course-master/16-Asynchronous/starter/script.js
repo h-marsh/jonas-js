@@ -284,14 +284,18 @@ const whereAmI = function (lat, lng) {
       return response.json();
     })
     .then(data => fetch(`https://restcountries.com/v2/name/${data.country}`))
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Country not found: (${response.status})`);
+      return response.json();
+    })
     .then(data => renderCountry(data[0]))
-    .catch(error => console.log(error))
+    .catch(error => console.error(`${error}😢`))
     .finally(() => (countriesContainer.style.opacity = 1));
 };
 
 btn.addEventListener('click', function () {
-  whereAmI('-33.933', '18.474');
+  whereAmI(-33.933, 18.474);
 });
 
 // whereAmI(' 52.508', '13.381 ');
