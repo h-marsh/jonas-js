@@ -306,13 +306,52 @@ const displayError = function (message) {
 ////////////////////////////////////  The Event Loop in Practice   ////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-console.log('Test start');
-setTimeout(() => console.log('0 second timer'), 0);
-Promise.resolve('Resolved promise 1').then(response => console.log(response));
+// console.log('Test start');
+// setTimeout(() => console.log('0 second timer'), 0);
+// Promise.resolve('Resolved promise 1').then(response => console.log(response));
 
-Promise.resolve('Resolved promise 2').then(response => {
-  for (let i = 0; i < 10000000000; i++) {}
-  console.log(response);
-});
+// Promise.resolve('Resolved promise 2').then(response => {
+//   for (let i = 0; i < 10000000000; i++) {}
+//   console.log(response);
+// });
 
-console.log('Test end');
+// console.log('Test end');
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////  Building a Simple Promise  /////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// const lotteryPromise = new Promise(function (resolve, reject) {
+//   console.log('RNG soon...🔢');
+
+//   setTimeout(() => {
+//     if (Math.random() >= 0.5) {
+//       resolve('Resolved!  😊');
+//     } else {
+//       reject(new Error('Rejected 💔'));
+//     }
+//   }, 2000);
+// });
+
+// lotteryPromise
+//   .then(res => console.log(res))
+//   .catch(error => console.error(error));
+
+/* promisifying setTimeout, a more real-world example */
+const wait = function (seconds) {
+  return new Promise(function (resolve, reject) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(2)
+  .then(() => {
+    console.log('Waited for 2 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('Waited for 1 seconds');
+  });
+
+Promise.resolve('Immediately resolved').then(res => console.log(res));
+Promise.reject(new Error('Bad!')).catch(err => console.error(err));
