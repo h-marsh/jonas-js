@@ -13,6 +13,7 @@
 // image element itself. In case there is an error loading the image (listen for
 // the'error' event), reject the promise
 // 3. If this part is too tricky for you, just watch the first part of the solution
+
 // PART 2
 // 4. Consume the promise using .then and also add an error handler
 // 5. After the image has loaded, pause execution for 2 seconds using the 'wait'
@@ -25,3 +26,49 @@
 // 8. After the 2 seconds have passed, hide the current image
 // Test data: Images in the img folder. Test the error handler by passing a wrong
 // image path. Set the network speed
+
+const wait = function (seconds) {
+  return new Promise(function (resolve, reject) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+const imgContainer = document.querySelector('.images');
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    image = document.createElement('img');
+    image.src = imgPath;
+
+    image.addEventListener('load', function () {
+      imgContainer.append(image);
+      resolve(image);
+    });
+
+    image.addEventListener('error', function () {
+      reject(new Error('Image not found!'));
+    });
+  });
+};
+
+let currentImg;
+
+createImage('img/img-1.jpg')
+  .then(img => {
+    currentImg = img;
+    console.log('Image 1 loaded');
+    return wait(2);
+  })
+  .then(() => {
+    currentImg.style.display = 'none';
+    return createImage('img/img-2.jpg');
+  })
+  .then(img => {
+    currentImg = img;
+    console.log('Image 2 loaded');
+    return wait(2);
+  })
+  .then(() => {
+    currentImg.style.display = 'none';
+  })
+  .catch(error => console.error(error));
