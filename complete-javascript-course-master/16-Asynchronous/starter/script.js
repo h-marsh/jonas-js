@@ -1,7 +1,7 @@
 'use strict';
 
-const btn = document.querySelector('.btn-country');
-const countriesContainer = document.querySelector('.countries');
+// const btn = document.querySelector('.btn-country');
+// const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////
 
@@ -159,20 +159,20 @@ const countriesContainer = document.querySelector('.countries');
 //     .then(data => renderCountry(data, 'neighbour'));
 // };
 
-const getCountryDataChaining = function (country) {
-  /* country 1 (original) */
-  fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(response => response.json())
-    .then(data => {
-      renderCountry(data[0]);
+// const getCountryDataChaining = function (country) {
+//   /* country 1 (original) */
+//   fetch(`https://restcountries.com/v2/name/${country}`)
+//     .then(response => response.json())
+//     .then(data => {
+//       renderCountry(data[0]);
 
-      /* country 2 (neighbor) */
-      const neighbor = data[0].borders[0];
-      return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
-    })
-    .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbour'));
-};
+//       /* country 2 (neighbor) */
+//       const neighbor = data[0].borders[0];
+//       return fetch(`https://restcountries.com/v2/alpha/${neighbor}`);
+//     })
+//     .then(response => response.json())
+//     .then(data => renderCountry(data, 'neighbour'));
+// };
 
 // getCountryData('spain');
 
@@ -180,9 +180,9 @@ const getCountryDataChaining = function (country) {
 ////////////////////////////////////  Handling Rejected Promises  ////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const displayError = function (message) {
-  countriesContainer.insertAdjacentText('beforeend', message);
-};
+// const displayError = function (message) {
+//   countriesContainer.insertAdjacentText('beforeend', message);
+// };
 
 // const getCountryDataRejected = function (country) {
 //   /* country 1 (original) */
@@ -376,6 +376,78 @@ const displayError = function (message) {
 //   });
 // };
 
+// const renderCountry = function (data, className = '') {
+//   const html = `
+//       <article class="country ${className}">
+//           <img class="country__img" src="${data.flag}" />
+//           <div class="country__data">
+//               <h3 class="country__name">${data.name}</h3>
+//               <h4 class="country__region">${data.region}</h4>
+//               <p class="country__row"><span>👫</span>${(
+//                 Number(data.population) / 1000000
+//               ).toFixed(1)} million people</p>
+//               <p class="country__row"><span>😃</span>${
+//                 data.languages[0].name
+//               }</p>
+//               <p class="country__row"><span>💰</span>${
+//                 data.currencies[0].code
+//               }</p>
+//           </div>
+//       </article>
+//       `;
+
+//   countriesContainer.insertAdjacentHTML('beforeend', html);
+// };
+
+// const getPosition = function () {
+//   return new Promise(function (resolve, reject) {
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
+
+// getPosition().then(position => console.log(position));
+
+// const whereAmI = function () {
+//   getPosition()
+//     .then(position => {
+//       console.log(position.coords);
+//       const { latitude: lat, longitude: lng } = position.coords;
+//       return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+//     })
+//     .then(response => {
+//       if (!response.ok)
+//         throw new Error(`Too many requests: (${response.status})`);
+//       return response.json();
+//     })
+//     .then(data => fetch(`https://restcountries.com/v2/name/${data.country}`))
+//     .then(response => {
+//       if (!response.ok)
+//         throw new Error(`Country not found: (${response.status})`);
+//       return response.json();
+//     })
+//     .then(data => renderCountry(data[0]))
+//     .catch(error => console.error(`${error}😢`))
+//     .finally(() => (countriesContainer.style.opacity = 1));
+// };
+
+// btn.addEventListener('click', function () {
+//   whereAmI(-33.933, 18.474);
+// });
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////  Consuming Promises with Async/Await  ////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// import fetch from 'node-fetch';
+
+const countriesContainer = document.querySelector('.countries');
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
 const renderCountry = function (data, className = '') {
   const html = `
       <article class="country ${className}">
@@ -397,39 +469,27 @@ const renderCountry = function (data, className = '') {
       `;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
 };
 
-const getPosition = function () {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
+const whereAmI = async function () {
+  // geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: lng } = pos.coords;
+
+  // reverse geocoding
+  const reverseGeo = await fetch(
+    `https://geocode.xyz/${lat},${lng}?geoit=json`
+  );
+  const dataReverseGeo = await reverseGeo.json();
+
+  // country data
+  const response = await fetch(
+    `https://restcountries.com/v2/name/${dataReverseGeo.country}`
+  );
+  const data = await response.json();
+  renderCountry(data[0]);
 };
 
-// getPosition().then(position => console.log(position));
-
-const whereAmI = function () {
-  getPosition()
-    .then(position => {
-      console.log(position.coords);
-      const { latitude: lat, longitude: lng } = position.coords;
-      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-    })
-    .then(response => {
-      if (!response.ok)
-        throw new Error(`Too many requests: (${response.status})`);
-      return response.json();
-    })
-    .then(data => fetch(`https://restcountries.com/v2/name/${data.country}`))
-    .then(response => {
-      if (!response.ok)
-        throw new Error(`Country not found: (${response.status})`);
-      return response.json();
-    })
-    .then(data => renderCountry(data[0]))
-    .catch(error => console.error(`${error}😢`))
-    .finally(() => (countriesContainer.style.opacity = 1));
-};
-
-btn.addEventListener('click', function () {
-  whereAmI(-33.933, 18.474);
-});
+whereAmI();
+console.log('This comes after the async call...but shows up first!');
