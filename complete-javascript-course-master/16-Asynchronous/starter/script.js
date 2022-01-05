@@ -506,6 +506,69 @@
 //   alert(error.message);
 // }
 
+// const countriesContainer = document.querySelector('.countries');
+
+// const getPosition = function () {
+//   return new Promise(function (resolve, reject) {
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
+
+// const renderCountry = function (data, className = '') {
+//   const html = `
+//       <article class="country ${className}">
+//           <img class="country__img" src="${data.flag}" />
+//           <div class="country__data">
+//               <h3 class="country__name">${data.name}</h3>
+//               <h4 class="country__region">${data.region}</h4>
+//               <p class="country__row"><span>👫</span>${(
+//                 Number(data.population) / 1000000
+//               ).toFixed(1)} million people</p>
+//               <p class="country__row"><span>😃</span>${
+//                 data.languages[0].name
+//               }</p>
+//               <p class="country__row"><span>💰</span>${
+//                 data.currencies[0].code
+//               }</p>
+//           </div>
+//       </article>
+//       `;
+
+//   countriesContainer.insertAdjacentHTML('beforeend', html);
+//   countriesContainer.style.opacity = 1;
+// };
+
+// const whereAmI = async function () {
+//   try {
+//     // geolocation
+//     const pos = await getPosition();
+//     const { latitude: lat, longitude: lng } = pos.coords;
+
+//     // reverse geocoding
+//     const reverseGeo = await fetch(
+//       `https://geocode.xyz/${lat},${lng}?geoit=json`
+//     );
+//     if (!reverseGeo.ok) throw new Error('Problem getting location data.');
+
+//     const dataReverseGeo = await reverseGeo.json();
+
+//     // country data
+//     const response = await fetch(
+//       `https://restcountries.com/v2/name/${dataReverseGeo.country}`
+//     );
+//     if (!response.ok) throw new Error('Problem getting country.');
+
+//     const data = await response.json();
+//     renderCountry(data[0]);
+//   } catch (error) {
+//     console.error(`💥${error.message}`);
+//   }
+// };
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////  Returning Values from Async Functions  ///////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
 const countriesContainer = document.querySelector('.countries');
 
 const getPosition = function () {
@@ -560,9 +623,29 @@ const whereAmI = async function () {
 
     const data = await response.json();
     renderCountry(data[0]);
+
+    return `You are in ${dataReverseGeo.city}, ${dataReverseGeo.country}`;
   } catch (error) {
     console.error(`💥${error.message}`);
+
+    // reject promise returned from async function
+    throw error;
   }
 };
 
-whereAmI();
+console.log('1: will get location');
+// whereAmI()
+//   .then(location => console.log(`2: ${location}`))
+//   .catch(error => console.error(`2: ${error.message}`))
+//   .finally(() => console.log('3: finished getting location'));
+
+// the whereAmI() call above but with async/await instead of then() and catch().  IIFE is used instead
+(async function () {
+  try {
+    const location = await whereAmI();
+    console.log(`2: ${location}`);
+  } catch (error) {
+    console.error(`2: ${error.message}`);
+  }
+  console.log('3: finished getting location');
+})();
