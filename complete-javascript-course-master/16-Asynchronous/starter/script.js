@@ -569,7 +569,7 @@
 ///////////////////////////////  Returning Values from Async Functions  ///////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const countriesContainer = document.querySelector('.countries');
+// const countriesContainer = document.querySelector('.countries');
 
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
@@ -633,19 +633,63 @@ const whereAmI = async function () {
   }
 };
 
-console.log('1: will get location');
+// console.log('1: will get location');
 // whereAmI()
 //   .then(location => console.log(`2: ${location}`))
 //   .catch(error => console.error(`2: ${error.message}`))
 //   .finally(() => console.log('3: finished getting location'));
 
 // the whereAmI() call above but with async/await instead of then() and catch().  IIFE is used instead
-(async function () {
+// (async function () {
+//   try {
+//     const location = await whereAmI();
+//     console.log(`2: ${location}`);
+//   } catch (error) {
+//     console.error(`2: ${error.message}`);
+//   }
+//   console.log('3: finished getting location');
+// })();
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+///////////////////////////////////  Running Promises in Parallel  ///////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+import fetch from 'node-fetch';
+
+const getJSON = function (url, errorMsg = 'Something went wrong.') {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+    return response.json();
+  });
+};
+
+const get3Countries = async function (country1, country2, country3) {
   try {
-    const location = await whereAmI();
-    console.log(`2: ${location}`);
+    // const [data1] = await getJSON(
+    //   `https://restcountries.com/v2/name/${country1}`
+    // );
+    // const [data2] = await getJSON(
+    //   `https://restcountries.com/v2/name/${country2}`
+    // );
+    // const [data3] = await getJSON(
+    //   `https://restcountries.com/v2/name/${country3}`
+    // );
+    // console.log([data1.capital, data2.capital, data3.capital]);
+
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v2/name/${country1}`),
+      getJSON(`https://restcountries.com/v2/name/${country2}`),
+      getJSON(`https://restcountries.com/v2/name/${country3}`),
+    ]);
+
+    console.log(data.map(element => element[0].capital));
   } catch (error) {
-    console.error(`2: ${error.message}`);
+    console.error(error);
   }
-  console.log('3: finished getting location');
-})();
+};
+
+// get3Countries('spain', 'canada', 'japan');
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////  Other Promise Combinators: race, allSettled, and any  ////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
