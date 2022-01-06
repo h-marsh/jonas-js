@@ -654,42 +654,73 @@ const whereAmI = async function () {
 ///////////////////////////////////  Running Promises in Parallel  ///////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-import fetch from 'node-fetch';
+// const getJSON = function (url, errorMsg = 'Something went wrong.') {
+//   return fetch(url).then(response => {
+//     if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+//     return response.json();
+//   });
+// };
 
-const getJSON = function (url, errorMsg = 'Something went wrong.') {
-  return fetch(url).then(response => {
-    if (!response.ok) throw new Error(`${errorMsg} (${response.status})`);
-    return response.json();
-  });
-};
+// const get3Countries = async function (country1, country2, country3) {
+//   try {
+// const [data1] = await getJSON(
+//   `https://restcountries.com/v2/name/${country1}`
+// );
+// const [data2] = await getJSON(
+//   `https://restcountries.com/v2/name/${country2}`
+// );
+// const [data3] = await getJSON(
+//   `https://restcountries.com/v2/name/${country3}`
+// );
+// console.log([data1.capital, data2.capital, data3.capital]);
 
-const get3Countries = async function (country1, country2, country3) {
-  try {
-    // const [data1] = await getJSON(
-    //   `https://restcountries.com/v2/name/${country1}`
-    // );
-    // const [data2] = await getJSON(
-    //   `https://restcountries.com/v2/name/${country2}`
-    // );
-    // const [data3] = await getJSON(
-    //   `https://restcountries.com/v2/name/${country3}`
-    // );
-    // console.log([data1.capital, data2.capital, data3.capital]);
+// const data = await Promise.all([
+//   getJSON(`https://restcountries.com/v2/name/${country1}`),
+//   getJSON(`https://restcountries.com/v2/name/${country2}`),
+//   getJSON(`https://restcountries.com/v2/name/${country3}`),
+// ]);
 
-    const data = await Promise.all([
-      getJSON(`https://restcountries.com/v2/name/${country1}`),
-      getJSON(`https://restcountries.com/v2/name/${country2}`),
-      getJSON(`https://restcountries.com/v2/name/${country3}`),
-    ]);
-
-    console.log(data.map(element => element[0].capital));
-  } catch (error) {
-    console.error(error);
-  }
-};
+//     console.log(data.map(element => element[0].capital));
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 // get3Countries('spain', 'canada', 'japan');
 
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 ////////////////////////  Other Promise Combinators: race, allSettled, and any  ////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
+
+// (async function () {
+//   const response = await Promise.race(
+//     getJSON(`https://restcountries.com/v2/name/italy`),
+//     getJSON(`https://restcountries.com/v2/name/egypt`),
+//     getJSON(`https://restcountries.com/v2/name/mexico`)
+//   );
+//   console.log(response[0]);
+// })();
+
+// const timeout = function (sec) {
+//   return new Promise(function (_, reject) {
+//     setTimeout(() => {
+//       reject(new Error('Request took too long'));
+//     }, sec * 1000);
+//   });
+// };
+
+// Promise.race([getJSON(`https://restcountries.com/v2/name/japan`), timeout(2)])
+//   .then(response => console.log(response))
+//   .catch(error => console.error(error));
+
+// Promise.allSettled([
+//   Promise.resolve('Success'),
+//   Promise.reject('Rejected'),
+//   Promise.resolve('Another Success'),
+// ]).then(response => console.log(response));
+
+// Promise.any([
+//   Promise.resolve('Success'),
+//   Promise.reject('Rejected'),
+//   Promise.resolve('Another Success'),
+// ]).then(response => console.log(response));
