@@ -1,5 +1,5 @@
 // 'use strict';
-// import fetch from 'node-fetch';
+import fetch from 'node-fetch';
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 ///////////////////////////////  Exporting and Importing in ES6 Modules  ///////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
@@ -29,7 +29,7 @@ console.log('++Importing Module++');
 
 // const response = await fetch('https://jsonplaceholder.typicode.com/posts');
 // const data = await response.json();
-// console.log(data);
+// // console.log(data);
 
 // const getLastPost = async function () {
 //   const response = await fetch('https://jsonplaceholder.typicode.com/posts');
@@ -40,7 +40,7 @@ console.log('++Importing Module++');
 
 // const lastPost = getLastPost();
 
-// Not clean
+// // Not clean
 // lastPost.then(last => console.log(last));
 
 // const lastPostAwait = await getLastPost();
@@ -50,28 +50,43 @@ console.log('++Importing Module++');
 /////////////////////////////////////////  The Module Pattern  /////////////////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-const ShoppingCart2 = (function () {
-  const cart = [];
-  const shippingCost = 10;
-  const totalPrice = 237;
-  const totalQuantity = 23;
+// const ShoppingCart2 = (function () {
+//   const cart = [];
+//   const shippingCost = 10;
+//   const totalPrice = 237;
+//   const totalQuantity = 23;
 
-  const addToCart = function (product, quantity) {
-    cart.push({ product, quantity });
-    console.log(`${quantity} ${product} was added to the cart!`);
-  };
+//   const addToCart = function (product, quantity) {
+//     cart.push({ product, quantity });
+//     console.log(`${quantity} ${product} was added to the cart!`);
+//   };
 
-  const orderStock = function (product, quantity) {
-    console.log(`${quantity} ${product} ordered from supplier!`);
-  };
+//   const orderStock = function (product, quantity) {
+//     console.log(`${quantity} ${product} ordered from supplier!`);
+//   };
 
-  return {
-    addToCart,
-    orderStock,
-    cart,
-  };
-})();
+//   return {
+//     addToCart,
+//     orderStock,
+//     cart,
+//   };
+// })();
 
-ShoppingCart2.addToCart('apples', 3);
-ShoppingCart2.orderStock('onions', 5);
-console.log(ShoppingCart2.cart);
+// ShoppingCart2.addToCart('apples', 3);
+// ShoppingCart2.orderStock('onions', 5);
+// console.log(ShoppingCart2.cart);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////////  CommonJS Modules  /////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+/* npm is all about commonJS modules */
+
+// commonJS export
+// export.addToCart = function (product, quantity) {
+//   cart.push({ product, quantity });
+//   console.log(`${quantity} ${product} was added to the cart!`);
+// };
+
+// commonJS import
+// const { addToCart } = require('./shoppingCart.js');
