@@ -4,6 +4,8 @@
 ///////////////////////////////  Exporting and Importing in ES6 Modules  ///////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
+import shoppingCart from './shoppingCart.js';
+
 /* importing a module without importing a value */
 console.log('++Importing Module++');
 
@@ -29,17 +31,47 @@ console.log('++Importing Module++');
 // const data = await response.json();
 // console.log(data);
 
-const getLastPost = async function () {
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-  const data = await response.json();
+// const getLastPost = async function () {
+//   const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+//   const data = await response.json();
 
-  return { title: data.at(-1).title, text: data.at(-1).body };
-};
+//   return { title: data.at(-1).title, text: data.at(-1).body };
+// };
 
-const lastPost = getLastPost();
+// const lastPost = getLastPost();
 
 // Not clean
 // lastPost.then(last => console.log(last));
 
-const lastPostAwait = await getLastPost();
-console.log(lastPostAwait);
+// const lastPostAwait = await getLastPost();
+// console.log(lastPostAwait);
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+/////////////////////////////////////////  The Module Pattern  /////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+const ShoppingCart2 = (function () {
+  const cart = [];
+  const shippingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} was added to the cart!`);
+  };
+
+  const orderStock = function (product, quantity) {
+    console.log(`${quantity} ${product} ordered from supplier!`);
+  };
+
+  return {
+    addToCart,
+    orderStock,
+    cart,
+  };
+})();
+
+ShoppingCart2.addToCart('apples', 3);
+ShoppingCart2.orderStock('onions', 5);
+console.log(ShoppingCart2.cart);
