@@ -1,10 +1,10 @@
 // 'use strict';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 ///////////////////////////////  Exporting and Importing in ES6 Modules  ///////////////////////////////
 ///////////////////////////////////////////                 ///////////////////////////////////////////
 
-import shoppingCart from './shoppingCart.js';
+// import shoppingCart from './shoppingCart.js';
 
 /* importing a module without importing a value */
 console.log('++Importing Module++');
@@ -90,3 +90,20 @@ console.log('++Importing Module++');
 
 // commonJS import
 // const { addToCart } = require('./shoppingCart.js');
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+////////////////////////////////////////  Introduction to NPM  ////////////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
+
+import { addToCart, cart, totalQuantity, totalPrice } from './shoppingCart.js';
+
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+import cloneDeep from 'lodash-es';
+
+console.log(totalQuantity);
+console.log(totalPrice);
+addToCart('eggs', 12);
+
+if (module.hot) {
+  module.hot.accept();
+}
