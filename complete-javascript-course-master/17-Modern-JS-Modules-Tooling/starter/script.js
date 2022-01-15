@@ -100,22 +100,26 @@ import { addToCart, cart, totalQuantity, totalPrice } from './shoppingCart.js';
 // import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
 import cloneDeep from 'lodash-es';
 
-console.log(totalQuantity);
-console.log(totalPrice);
-addToCart('eggs', 12);
-addToCart('potato', 2);
-addToCart('bread', 1);
-addToCart('apples', 4);
-console.log(cart);
+// console.log(totalQuantity);
+// console.log(totalPrice);
+// addToCart('eggs', 12);
+// addToCart('potato', 2);
+// addToCart('bread', 1);
+// addToCart('apples', 4);
+// console.log(cart);
 
 if (module.hot) {
   module.hot.accept();
 }
 
-console.log(cart.find(element => element.quantity >= 2));
+// console.log(cart.find(element => element.quantity >= 2));
 
 // for polyfilling es6 array methods
 import 'core-js/stable';
 
 // for polyfilling async functions
 import 'regenerator-runtime/runtime';
+
+///////////////////////////////////////////                 ///////////////////////////////////////////
+//////////////////////////////////  Let’s Fix Some Bad Code: Part 1  //////////////////////////////////
+///////////////////////////////////////////                 ///////////////////////////////////////////
