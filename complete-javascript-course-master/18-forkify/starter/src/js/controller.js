@@ -1,6 +1,6 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
-import icons from 'url:../img/icons.svg';
+
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -18,25 +18,13 @@ const timeout = function (s) {
 
 ///////////////////////////////////////
 
-const renderSpinner = function (parentElement) {
-  const markup = `
-        <div class="spinner">
-          <svg>
-            <use href="${icons}#icon-loader"></use>
-          </svg>
-        </div>
-        `;
-  parentElement.innerHTML = '';
-  parentElement.insertAdjacentHTML('afterbegin', markup);
-};
-
-const showRecipe = async function () {
+const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
 
     if (!id) return;
 
-    renderSpinner(recipeContainer);
+    recipeView.renderSpinner();
 
     // 1) loading recipe
     await model.loadRecipe(id);
@@ -49,8 +37,8 @@ const showRecipe = async function () {
 };
 
 ['hashchange', 'load'].forEach(event =>
-  window.addEventListener(event, showRecipe)
+  window.addEventListener(event, controlRecipes)
 );
 // the above does the same as the two separate calls below.
-// window.addEventListener('hashchange', showRecipe);
-// window.addEventListener('load', showRecipe);
+// window.addEventListener('hashchange', controlRecipes);
+// window.addEventListener('load', controlRecipes);
