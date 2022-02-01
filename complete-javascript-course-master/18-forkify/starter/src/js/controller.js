@@ -10,9 +10,9 @@ import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
 // hot module swapping coming from parcel
-if (module.hot) {
-  module.hot.accept;
-}
+// if (module.hot) {
+//   module.hot.accept;
+// }
 
 const controlRecipes = async function () {
   try {
@@ -44,7 +44,7 @@ const controlSearchResults = async function () {
     await model.loadSearchResults(query);
 
     // render results
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.getSearchResultsPage(1));
   } catch (error) {
     console.log(error);
   }
