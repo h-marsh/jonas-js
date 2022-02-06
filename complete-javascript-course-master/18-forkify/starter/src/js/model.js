@@ -48,6 +48,7 @@ export const loadSearchResults = async function (query) {
         image: recipe.image_url,
       };
     });
+    state.search.page = 1;
   } catch (error) {
     throw error;
   }
@@ -70,3 +71,5 @@ export const updateServings = function (newServings) {
 
   state.recipe.servings = newServings;
 };
+
+export const addBookmark = function (reicpe) {};

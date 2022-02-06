@@ -23,10 +23,13 @@ const controlRecipes = async function () {
 
     recipeView.renderSpinner();
 
-    // 1) loading recipe
+    // 1) update results view to mark selected search result
+    resultsView.update(model.getSearchResultsPage());
+
+    // 2) loading recipe
     await model.loadRecipe(id);
 
-    // 2) rendering recipe
+    // 3) rendering recipe
     recipeView.render(model.state.recipe);
   } catch (error) {
     recipeView.renderError();
@@ -67,7 +70,8 @@ const controlServings = function (newServings) {
   model.updateServings(newServings);
 
   // update the recipe view
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 };
 
 // adds all the handlers to their respective listeners when the page loads, via pub-sub pattern
