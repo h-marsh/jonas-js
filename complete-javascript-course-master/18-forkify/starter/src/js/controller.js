@@ -24,8 +24,9 @@ const controlRecipes = async function () {
 
     recipeView.renderSpinner();
 
-    // 1) update results view to mark selected search result
+    // 1) update results and bookmarks view to mark selected search result
     resultsView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
 
     // 2) loading recipe
     await model.loadRecipe(id);
@@ -84,7 +85,7 @@ const controlAddBookmark = function () {
   recipeView.update(model.state.recipe);
 
   // render/update bookmark list
-  bookmarksView.render(model.state.recipe);
+  bookmarksView.render(model.state.bookmarks);
 };
 
 // adds all the handlers to their respective listeners when the page loads, via pub-sub pattern
