@@ -104,3 +104,21 @@ const init = function () {
   if (storedBookmarks) state.bookmarks = JSON.parse(storedBookmarks);
 };
 init();
+
+export const uploadRecipe = async function (newRecipe) {
+  const ingredients = Object.entries(newRecipe)
+    .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
+    .map(ingredient => {
+      const ingredientsArray = ingredient[1].replaceAll(' ', '').split(',');
+      if (ingredientsArray.length !== 3)
+        throw new Error('Wrong ingredient format!');
+
+      const [quantity, unit, description] = ingredientsArray;
+      return {
+        quantity: quantity ? Number(quantity) : null,
+        unit,
+        description,
+      };
+    });
+  console.log(ingredients);
+};

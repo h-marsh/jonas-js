@@ -94,7 +94,12 @@ const controlBookmarks = function () {
 };
 
 const controlAddRecipe = function (newRecipe) {
-  // function to uplaod new recipe data
+  try {
+    // function to uplaod new recipe data
+    model.uploadRecipe(newRecipe);
+  } catch (error) {
+    addRecipeView.renderError(error.message);
+  }
 };
 
 // adds all the handlers to their respective listeners when the page loads, via pub-sub pattern
