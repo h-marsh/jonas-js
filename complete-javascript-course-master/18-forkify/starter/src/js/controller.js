@@ -1,6 +1,7 @@
 // https://forkify-api.herokuapp.com/v2
 
 import * as model from './model.js';
+import { MODAL_CLOSE_SEC } from './config.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -95,8 +96,21 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
+    addRecipeView.renderSpinner();
+
     // function to uplaod new recipe data
     await model.uploadRecipe(newRecipe);
+
+    // render newly added recipe
+    recipeView.render(model.state.recipe);
+
+    // display success message
+    addRecipeView.renderSuccessMessage();
+
+    // close form window after a short time
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_SEC * 1000);
   } catch (error) {
     addRecipeView.renderError(error.message);
   }
