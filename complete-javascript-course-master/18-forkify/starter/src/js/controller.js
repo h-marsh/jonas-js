@@ -107,6 +107,12 @@ const controlAddRecipe = async function (newRecipe) {
     // display success message
     addRecipeView.renderSuccessMessage();
 
+    // re-render bookmark view to show new custom recipe
+    bookmarksView.render(model.state.bookmarks);
+
+    // change url id
+    window.history.pushState(null, '', `#${model.state.recipe.id}}`);
+
     // close form window after a short time
     setTimeout(function () {
       addRecipeView.toggleWindow();
