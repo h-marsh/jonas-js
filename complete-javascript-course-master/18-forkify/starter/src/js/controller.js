@@ -10,13 +10,8 @@ import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 
 import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-import { async } from 'regenerator-runtime';
-
-// hot module swapping coming from parcel
-// if (module.hot) {
-//   module.hot.accept;
-// }
+// import '../../regenerator-runtime/runtime';
+// import { async } from '../../regenerator-runtime';
 
 const controlRecipes = async function () {
   try {
